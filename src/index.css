@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Colores */
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #3a3939;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-surface-variant: #353534;
+
+  --color-primary: #fefff1;
+  --color-on-primary: #233600;
+  --color-primary-container: #bef264;
+  --color-on-primary-container: #4b6e00;
+  --color-primary-fixed: #bff365;
+  --color-primary-fixed-dim: #a4d64c;
+  --color-on-primary-fixed: #131f00;
+  --color-on-primary-fixed-variant: #354e00;
+
+  --color-secondary: #b3d17a;
+  --color-on-secondary: #243600;
+  --color-secondary-container: #385005;
+  --color-on-secondary-container: #a5c36d;
+
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #c3c9b2;
+  --color-outline: #8d937e;
+  --color-outline-variant: #434938;
+
+  --color-background: #131313;
+  --color-on-background: #e5e2e1;
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+
+  /* Tipografia */
+  --font-label-md: "Inter", sans-serif;
+  --font-label-sm: "Inter", sans-serif;
+  --font-display-lg-mobile: "Inter", sans-serif;
+  --font-headline-sm: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-md--font-weight: 500;
+
+  --text-label-sm: 10px;
+  --text-label-sm--line-height: 12px;
+  --text-label-sm--letter-spacing: 0.08em;
+  --text-label-sm--font-weight: 600;
+
+  --text-display-lg-mobile: 38px;
+  --text-display-lg-mobile--line-height: 42px;
+  --text-display-lg-mobile--letter-spacing: -0.045em;
+  --text-display-lg-mobile--font-weight: 600;
+
+  --text-headline-sm: 20px;
+  --text-headline-sm--line-height: 26px;
+  --text-headline-sm--letter-spacing: -0.025em;
+  --text-headline-sm--font-weight: 500;
+
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-md--letter-spacing: 0em;
+  --text-body-md--font-weight: 400;
+
+  /* Espaciado con nombre */
+  --spacing-gutter: 1rem;
+  --spacing-margin: 1.25rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+
+  /* Radios */
+  --radius: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  overscroll-behavior: none;
+}

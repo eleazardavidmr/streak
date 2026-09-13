@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IconLogout, IconUser } from "@tabler/icons-react";
 import { defaultProfile } from "../../lib/profile.js";
+import BrandMark from "./BrandMark.jsx";
 
 export default function Navbar({ profile = defaultProfile, onSignOut }) {
   const { displayName, avatarUrl, email } = profile;
@@ -13,10 +14,10 @@ export default function Navbar({ profile = defaultProfile, onSignOut }) {
   }, [avatarUrl]);
 
   return (
-    <header className="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <header className="fixed top-0 w-full z-50 pt-safe bg-surface">
       <div className="h-16 px-margin flex items-center justify-between">
         <h1 className="flex items-center gap-space-sm font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">
-          <img src="/logo.svg" alt="" className="w-6 h-6" />
+          <BrandMark />
           Streak
         </h1>
         <div className="flex items-center gap-space-sm">

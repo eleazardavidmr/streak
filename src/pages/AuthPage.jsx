@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IconArrowRight, IconLock, IconMail } from "@tabler/icons-react";
 import { authenticate } from "../lib/auth.js";
+import BrandMark from "../components/ui/BrandMark.jsx";
 
 export default function AuthPage({ mode, onNavigate }) {
   const isRegister = mode === "register";
@@ -34,7 +35,7 @@ export default function AuthPage({ mode, onNavigate }) {
     <main className="min-h-screen bg-surface text-on-surface flex flex-col px-margin pt-safe">
       <header className="flex items-center justify-between h-20">
         <span className="flex items-center gap-space-sm font-headline-sm text-headline-sm uppercase tracking-tight">
-          <img src="/logo.svg" alt="" className="w-6 h-6" />
+          <BrandMark />
           Streak
         </span>
         <span className="text-label-sm text-outline uppercase tracking-widest">

@@ -88,7 +88,7 @@ export default function Achievements() {
     : 0;
 
   return (
-    <main className="flex-1 flex flex-col relative w-full px-margin pt-16 pb-24 bg-surface">
+    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
       <div className="pt-space-sm pb-space-lg">
         <p className="font-label-sm text-label-sm text-outline tracking-widest uppercase">
           Record

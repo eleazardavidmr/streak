@@ -86,7 +86,7 @@ export default function Dashboard({ profile }) {
 
   return (
     <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
-      <main className="flex-1 flex flex-col relative w-full px-margin pt-16 pb-24 bg-surface">
+      <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
         <StreakHero
           streak={streak}
           bestStreak={bestStreak}

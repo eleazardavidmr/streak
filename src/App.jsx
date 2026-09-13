@@ -147,7 +147,7 @@ function App() {
       onTabChange={(tab) => navigate(tabPaths[tab])}
     >
       {profileError ? (
-        <main className="px-margin pt-24 text-body-md text-error">
+        <main className="px-margin pt-nav text-body-md text-error">
           {profileError}
         </main>
       ) : (

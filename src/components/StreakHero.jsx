@@ -24,7 +24,7 @@ export default function StreakHero({
       <div className="flex flex-col pt-space-md pb-space-lg">
         <div className="flex items-baseline gap-space-sm">
           <span
-            className={`font-display-lg-mobile text-display-lg-mobile tracking-tighter transition-all duration-300 ${
+            className={`font-display-lg-mobile text-display-lg-mobile leading-none tracking-tighter transition-all duration-300 ${
               highlight ? "text-primary-container" : "text-primary"
             }`}
           >

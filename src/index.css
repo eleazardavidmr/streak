@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
   /* Colores */
   --color-surface: #131313;
@@ -86,6 +84,44 @@
   --radius-xl: 3rem;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-surface: #fefff1;
+    --color-surface-dim: #ecece4;
+    --color-surface-bright: #ffffff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f5f6ea;
+    --color-surface-container: #eff0e4;
+    --color-surface-container-high: #e4e5d9;
+    --color-surface-container-highest: #d8d9cd;
+    --color-surface-variant: #e4e5d9;
+
+    --color-primary: #233600;
+    --color-on-primary: #fefff1;
+    --color-primary-container: #bef264;
+    --color-on-primary-container: #354e00;
+    --color-primary-fixed: #bff365;
+    --color-primary-fixed-dim: #4b6e00;
+    --color-on-primary-fixed: #131f00;
+    --color-on-primary-fixed-variant: #354e00;
+
+    --color-secondary: #3d5608;
+    --color-on-secondary: #fefff1;
+    --color-secondary-container: #d7f09a;
+    --color-on-secondary-container: #243600;
+
+    --color-on-surface: #1c1b1b;
+    --color-on-surface-variant: #45483c;
+    --color-outline: #76796c;
+    --color-outline-variant: #c6c8ba;
+
+    --color-background: #fefff1;
+    --color-on-background: #1c1b1b;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+  }
+}
+
 @utility pt-safe {
   padding-top: env(safe-area-inset-top, 0px);
 }
@@ -94,8 +130,35 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+@utility pt-nav {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+}
+
+@utility pb-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
+}
+
 ::-webkit-scrollbar {
   display: none;
+}
+
+html {
+  color-scheme: dark;
+  background-color: var(--color-surface);
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
 }
 
 body {

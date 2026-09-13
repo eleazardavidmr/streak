@@ -39,11 +39,12 @@
   --color-error-container: #93000a;
 
   /* Tipografia */
-  --font-label-md: "Inter", sans-serif;
-  --font-label-sm: "Inter", sans-serif;
-  --font-display-lg-mobile: "Inter", sans-serif;
-  --font-headline-sm: "Inter", sans-serif;
-  --font-body-md: "Inter", sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  --font-label-md: var(--font-sans);
+  --font-label-sm: var(--font-sans);
+  --font-display-lg-mobile: var(--font-sans);
+  --font-headline-sm: var(--font-sans);
+  --font-body-md: var(--font-sans);
 
   --text-label-md: 12px;
   --text-label-md--line-height: 16px;
@@ -98,5 +99,6 @@
 }
 
 body {
+  font-family: var(--font-sans);
   overscroll-behavior: none;
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import StreakHero from "../components/StreakHero";
-import CheckinButton from "../components/CheckinButton";
+import StreakHero from "../components/StreakHero.jsx";
+import CheckinButton from "../components/CheckInButton.jsx";
 import UrgentSupport from "../components/UrgenSupport.jsx";
-import ActivityHeatmap from "../components/ActivityHeatmap";
-import FocusPrinciples from "../components/FocusPrinciples";
+import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
+import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import {
   buildHeatmapDistribution,
   calculateBestStreak,

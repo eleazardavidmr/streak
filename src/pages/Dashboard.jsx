@@ -113,7 +113,7 @@ export default function Dashboard({ profile, onNavigate }) {
           />
         </div>
 
-        <div className="flex flex-col gap-space-md pt-space-sm motion-stagger">
+        <div className="flex items-center justify-between rounded-2xl bg-surface-container-low motion-stagger px-5 py-3">
           <CheckinButton
             checkedIn={checkedIn}
             onToggle={handleToggleCheckin}

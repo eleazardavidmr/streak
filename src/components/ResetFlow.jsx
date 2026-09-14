@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { IconRefresh } from "@tabler/icons-react";
+import ActionConfirmationModal from "./ActionConfirmationModal.jsx";
 import ReportSetback from "./ReportSetback.jsx";
 import ActionSelection from "./ActionSelection.jsx";
 import ActionConfirmation from "./ActionConfirmation.jsx";
@@ -18,6 +20,7 @@ export default function ResetFlow({
   const [action, setAction] = useState(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [confirming, setConfirming] = useState(false);
 
   const close = () => {
     setStep("entry");
@@ -119,11 +122,29 @@ export default function ResetFlow({
     <div className="flex flex-col">
       <button
         type="button"
-        onClick={() => onNavigate?.("/reset")}
-        className="w-full bg-transparent text-center font-body-md text-body-md text-outline motion-interactive hover:text-on-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-container transition-colors duration-150 py-space-xs select-none"
+        onClick={() => setConfirming(true)}
+        aria-label="Open reset support"
+        className="w-12 h-12 px-4 py-2 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex flex-col items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
       >
-        Let’s reset together
+        <IconRefresh size={18} stroke={2.25} />
+        {/*
+
+
+        <span className="text-center">Reset together</span>
+        */}
       </button>
+      <ActionConfirmationModal
+        open={confirming}
+        title="Start a reset together?"
+        description="You will be guided through a calm reset flow to reflect, choose your next action, and return to your cadence."
+        confirmLabel="Start reset"
+        icon={IconRefresh}
+        onClose={() => setConfirming(false)}
+        onConfirm={() => {
+          setConfirming(false);
+          onNavigate?.("/reset");
+        }}
+      />
     </div>
   );
 }

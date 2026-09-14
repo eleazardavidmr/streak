@@ -32,8 +32,8 @@ export default function AuthPage({ mode, onNavigate }) {
   };
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface flex flex-col px-margin pt-safe">
-      <header className="flex items-center justify-between h-20">
+    <main className="min-h-screen bg-surface text-on-surface flex flex-col px-margin pt-safe motion-page">
+      <header className="flex items-center justify-between h-20 motion-slide-down">
         <span className="flex items-center gap-space-sm font-headline-sm text-headline-sm uppercase tracking-tight">
           <BrandMark />
           Streak
@@ -44,7 +44,7 @@ export default function AuthPage({ mode, onNavigate }) {
       </header>
 
       <div className="w-full max-w-md mx-auto flex-1 flex flex-col justify-center py-space-xl">
-        <div className="mb-space-xl">
+        <div className="mb-space-xl motion-rise">
           <p className="text-label-sm text-primary-container uppercase tracking-widest mb-space-md">
             {isRegister ? "Begin your record" : "Welcome back"}
           </p>
@@ -58,7 +58,10 @@ export default function AuthPage({ mode, onNavigate }) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-space-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-space-lg motion-stagger"
+        >
           <label className="group flex items-center gap-space-sm border-b border-surface-container-highest focus-within:border-primary-container transition-colors">
             <IconMail size={18} className="text-outline" stroke={1.7} />
             <input
@@ -94,7 +97,7 @@ export default function AuthPage({ mode, onNavigate }) {
           <button
             type="submit"
             disabled={loading}
-            className="h-13 mt-space-sm rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs active:scale-[0.98] disabled:opacity-50 transition-transform"
+            className="h-13 mt-space-sm rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] disabled:opacity-50 transition-transform"
           >
             {loading ? "Working..." : isRegister ? "Create account" : "Sign in"}
             <IconArrowRight size={18} stroke={2} />

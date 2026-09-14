@@ -8,7 +8,7 @@ const tabs = [
 
 export default function BottomNav({ active, onChange }) {
   return (
-    <nav className="fixed bottom-0 w-full z-50 pb-safe bg-surface">
+    <nav className="fixed bottom-0 w-full z-50 pb-safe bg-surface motion-slide-up">
       <div className="flex items-center justify-around h-16 px-margin">
         {tabs.map(({ id, Icon, label }) => {
           const isActive = active === id;
@@ -19,7 +19,7 @@ export default function BottomNav({ active, onChange }) {
               onClick={() => onChange(id)}
               aria-label={label}
               aria-current={isActive ? "page" : undefined}
-              className={`relative flex flex-col items-center justify-center min-w-11 min-h-11 transition-colors ${
+              className={`relative flex flex-col items-center justify-center min-w-11 min-h-11 motion-interactive transition-colors ${
                 isActive ? "text-primary" : "text-outline hover:text-on-surface"
               }`}
             >

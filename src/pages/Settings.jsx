@@ -21,19 +21,28 @@ function isValidHttpUrl(value) {
   }
 }
 
-function Toggle({ checked, onChange, label, description, icon: Icon, disabled }) {
+function Toggle({
+  checked,
+  onChange,
+  label,
+  description,
+  icon: Icon,
+  disabled,
+}) {
   return (
     <button
       type="button"
       onClick={() => onChange(!checked)}
       disabled={disabled}
-      className="w-full flex items-center justify-between gap-space-md py-space-md text-left disabled:opacity-50"
+      className="w-full flex items-center justify-between gap-space-md py-space-md text-left motion-interactive disabled:opacity-50"
     >
       <div className="flex items-start gap-space-sm min-w-0">
         <Icon size={18} className="text-outline mt-0.5 shrink-0" stroke={1.8} />
         <div className="min-w-0">
           <p className="font-body-md text-body-md text-on-surface">{label}</p>
-          <p className="font-label-sm text-label-sm text-outline">{description}</p>
+          <p className="font-label-sm text-label-sm text-outline">
+            {description}
+          </p>
         </div>
       </div>
       <span
@@ -51,7 +60,12 @@ function Toggle({ checked, onChange, label, description, icon: Icon, disabled })
   );
 }
 
-export default function Settings({ user, profile, onProfileChange, onSignOut }) {
+export default function Settings({
+  user,
+  profile,
+  onProfileChange,
+  onSignOut,
+}) {
   const [displayName, setDisplayName] = useState(profile.displayName);
   const [avatarUrl, setAvatarUrl] = useState(profile.avatarUrl);
   const [saving, setSaving] = useState(false);
@@ -122,7 +136,7 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
 
   return (
     <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
-      <div className="pt-space-sm pb-space-lg">
+      <div className="pt-space-sm pb-space-lg motion-rise">
         <p className="font-label-sm text-label-sm text-outline tracking-widest uppercase">
           Preferences
         </p>
@@ -131,12 +145,18 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
         </h2>
       </div>
 
-      <section className="flex flex-col">
+      <section
+        className="flex flex-col motion-rise"
+        style={{ animationDelay: "80ms" }}
+      >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
           Profile
         </span>
 
-        <form onSubmit={handleSaveProfile} className="flex flex-col gap-space-lg pt-space-md">
+        <form
+          onSubmit={handleSaveProfile}
+          className="flex flex-col gap-space-lg pt-space-md"
+        >
           <div className="flex items-center gap-space-md">
             <div className="w-16 h-16 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center shrink-0">
               {showPreview ? (
@@ -194,7 +214,7 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
           <button
             type="submit"
             disabled={saving}
-            className="h-13 rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs active:scale-[0.98] disabled:opacity-50 transition-transform"
+            className="h-13 rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] disabled:opacity-50 transition-transform"
           >
             <IconCheck size={18} stroke={2} />
             {saving ? "Saving..." : "Save profile"}
@@ -204,7 +224,10 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
 
       <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-      <section className="flex flex-col">
+      <section
+        className="flex flex-col motion-rise"
+        style={{ animationDelay: "160ms" }}
+      >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
           General
         </span>
@@ -219,7 +242,7 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
                   profile.weekStartsOn === "monday" ? "sunday" : "monday",
               })
             }
-            className="w-full flex items-center justify-between gap-space-md py-space-md text-left disabled:opacity-50"
+            className="w-full flex items-center justify-between gap-space-md py-space-md text-left motion-interactive disabled:opacity-50"
           >
             <div className="flex items-start gap-space-sm min-w-0">
               <IconCalendarWeek
@@ -265,7 +288,10 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
 
       <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-      <section className="flex flex-col gap-space-md">
+      <section
+        className="flex flex-col gap-space-md motion-rise"
+        style={{ animationDelay: "240ms" }}
+      >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
           Account
         </span>
@@ -273,7 +299,7 @@ export default function Settings({ user, profile, onProfileChange, onSignOut }) 
         <button
           type="button"
           onClick={onSignOut}
-          className="h-13 rounded-full bg-surface-container-high text-on-surface text-label-md font-semibold active:scale-[0.98] transition-transform"
+          className="h-13 rounded-full bg-surface-container-high text-on-surface text-label-md font-semibold motion-interactive active:scale-[0.98] transition-transform"
         >
           Sign out
         </button>

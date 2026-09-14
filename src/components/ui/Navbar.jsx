@@ -14,7 +14,7 @@ export default function Navbar({ profile = defaultProfile, onSignOut }) {
   }, [avatarUrl]);
 
   return (
-    <header className="fixed top-0 w-full z-50 pt-safe bg-surface">
+    <header className="fixed top-0 w-full z-50 pt-safe bg-surface motion-slide-down">
       <div className="h-16 px-margin flex items-center justify-between">
         <h1 className="flex items-center gap-space-sm font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">
           <BrandMark />

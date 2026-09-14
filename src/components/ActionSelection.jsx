@@ -66,13 +66,13 @@ export default function ActionSelection({ onSelect, onSkip, onBack }) {
         </p>
       </div>
 
-      <div className="flex flex-col w-full divide-y divide-outline-variant/30">
+      <div className="flex flex-col w-full divide-y divide-outline-variant/30 motion-stagger">
         {resetActions.map((action) => (
           <button
             key={action.id}
             type="button"
             onClick={() => onSelect(action)}
-            className="group flex items-center justify-between w-full py-space-md text-left transition-colors hover:bg-surface-container-low"
+            className="group flex items-center justify-between w-full py-space-md text-left motion-interactive transition-colors hover:bg-surface-container-low"
           >
             <div className="flex items-center gap-space-md min-w-0 pr-space-sm">
               <div className="flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-secondary shrink-0 group-hover:bg-secondary-container group-hover:text-primary-container transition-colors">

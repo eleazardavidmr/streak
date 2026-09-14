@@ -89,7 +89,7 @@ export default function Achievements() {
 
   return (
     <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
-      <div className="pt-space-sm pb-space-lg">
+      <div className="pt-space-sm pb-space-lg motion-rise">
         <p className="font-label-sm text-label-sm text-outline tracking-widest uppercase">
           Record
         </p>
@@ -111,7 +111,7 @@ export default function Achievements() {
             </span>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col motion-stagger">
             {milestones.map((item, index) => {
               const unlocked = item.unlocked(stats);
               return (
@@ -133,7 +133,9 @@ export default function Achievements() {
                     <div>
                       <p
                         className={`font-body-md text-body-md ${
-                          unlocked ? "text-on-surface" : "text-on-surface-variant"
+                          unlocked
+                            ? "text-on-surface"
+                            : "text-on-surface-variant"
                         }`}
                       >
                         {item.title}

@@ -102,16 +102,18 @@ export default function Dashboard({ profile }) {
   }
 
   return (
-    <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container motion-page">
       <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
-        <StreakHero
-          streak={streak}
-          bestStreak={bestStreak}
-          highlight={checkedIn}
-          showBestStreak={profile.showBestStreak}
-        />
+        <div className="motion-rise">
+          <StreakHero
+            streak={streak}
+            bestStreak={bestStreak}
+            highlight={checkedIn}
+            showBestStreak={profile.showBestStreak}
+          />
+        </div>
 
-        <div className="flex flex-col gap-space-md pt-space-sm">
+        <div className="flex flex-col gap-space-md pt-space-sm motion-stagger">
           <CheckinButton
             checkedIn={checkedIn}
             onToggle={handleToggleCheckin}
@@ -132,15 +134,19 @@ export default function Dashboard({ profile }) {
 
         <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-        <ActivityHeatmap
-          distribution={distribution}
-          loggedDays={checkinDates.length}
-          weekStartsOn={profile.weekStartsOn}
-        />
+        <div className="motion-rise" style={{ animationDelay: "180ms" }}>
+          <ActivityHeatmap
+            distribution={distribution}
+            loggedDays={checkinDates.length}
+            weekStartsOn={profile.weekStartsOn}
+          />
+        </div>
 
         <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-        <FocusPrinciples />
+        <div className="motion-rise" style={{ animationDelay: "260ms" }}>
+          <FocusPrinciples />
+        </div>
       </main>
     </div>
   );

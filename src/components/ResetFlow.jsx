@@ -54,53 +54,61 @@ export default function ResetFlow({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="w-full bg-transparent text-center font-body-md text-body-md text-outline hover:text-on-surface transition-colors duration-150 py-space-xs select-none"
+        className="w-full bg-transparent text-center font-body-md text-body-md text-outline motion-interactive hover:text-on-surface transition-colors duration-150 py-space-xs select-none"
       >
         Let’s reset together
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-[60] bg-surface overflow-y-auto px-margin pt-safe pb-safe">
-          <div className="max-w-md mx-auto py-space-md">
+        <div className="fixed inset-0 z-60 bg-surface overflow-y-auto px-margin pt-safe pb-safe motion-overlay">
+          <div className="max-w-md mx-auto py-space-md motion-panel">
             {step === "entry" && (
-              <ReportSetback
-                streak={streak}
-                checkinDates={checkinDates}
-                onContinue={() => setStep("action")}
-                onCancel={close}
-              />
+              <div className="motion-rise">
+                <ReportSetback
+                  streak={streak}
+                  checkinDates={checkinDates}
+                  onContinue={() => setStep("action")}
+                  onCancel={close}
+                />
+              </div>
             )}
 
             {step === "action" && (
-              <ActionSelection
-                onBack={() => setStep("entry")}
-                onSelect={(nextAction) => {
-                  setAction(nextAction);
-                  setStep("confirm");
-                }}
-                onSkip={() => {
-                  setAction(null);
-                  setStep("reflect");
-                }}
-              />
+              <div className="motion-rise">
+                <ActionSelection
+                  onBack={() => setStep("entry")}
+                  onSelect={(nextAction) => {
+                    setAction(nextAction);
+                    setStep("confirm");
+                  }}
+                  onSkip={() => {
+                    setAction(null);
+                    setStep("reflect");
+                  }}
+                />
+              </div>
             )}
 
             {step === "confirm" && (
-              <ActionConfirmation
-                action={action}
-                onDone={() => setStep("reflect")}
-                onChangeAction={() => setStep("action")}
-                onClose={close}
-              />
+              <div className="motion-rise">
+                <ActionConfirmation
+                  action={action}
+                  onDone={() => setStep("reflect")}
+                  onChangeAction={() => setStep("action")}
+                  onClose={close}
+                />
+              </div>
             )}
 
             {step === "reflect" && (
-              <ReflectionForm
-                saving={saving}
-                onBack={() => setStep(action ? "confirm" : "action")}
-                onSave={finish}
-                onSkip={() => finish()}
-              />
+              <div className="motion-rise">
+                <ReflectionForm
+                  saving={saving}
+                  onBack={() => setStep(action ? "confirm" : "action")}
+                  onSave={finish}
+                  onSkip={() => finish()}
+                />
+              </div>
             )}
 
             {error && (

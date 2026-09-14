@@ -8,13 +8,13 @@ export default function UrgeSupport() {
     <div className="flex flex-col gap-space-md">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full bg-transparent text-center font-body-md text-body-md text-outline hover:text-on-surface transition-colors duration-150 py-space-xs select-none"
+        className="w-full bg-transparent text-center font-body-md text-body-md text-outline motion-interactive hover:text-on-surface transition-colors duration-150 py-space-xs select-none"
       >
         I'm feeling an urge right now
       </button>
 
       {open && (
-        <div className="flex flex-col bg-surface-container-low rounded p-space-md gap-space-sm transition-all">
+        <div className="flex flex-col bg-surface-container-low rounded p-space-md gap-space-sm transition-all motion-panel">
           <div className="flex items-center justify-between">
             <span className="font-label-md text-label-md text-primary-container uppercase tracking-wider">
               Grounding protocol

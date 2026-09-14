@@ -17,7 +17,7 @@ export default function FocusPrinciples({ principles = defaultPrinciples }) {
       <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
         Focus principles
       </span>
-      <div className="flex flex-col gap-space-sm">
+      <div className="flex flex-col gap-space-sm motion-stagger">
         {principles.map((p, i) => (
           <div key={p.number}>
             <div className="flex items-start gap-space-sm">

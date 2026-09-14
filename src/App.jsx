@@ -108,7 +108,7 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest">
+      <div className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest motion-scale-in">
         Loading
       </div>
     );

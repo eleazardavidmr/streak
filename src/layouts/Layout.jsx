@@ -11,7 +11,9 @@ export default function Layout({
   return (
     <div className="min-h-screen bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
       <Navbar profile={profile} onSignOut={onSignOut} />
-      {children}
+      <div key={activeTab} className="motion-page">
+        {children}
+      </div>
       <BottomNav active={activeTab} onChange={onTabChange} />
     </div>
   );

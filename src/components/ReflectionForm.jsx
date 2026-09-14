@@ -13,7 +13,7 @@ export default function ReflectionForm({
   const [note, setNote] = useState("");
 
   return (
-    <div className="flex flex-col w-full gap-space-lg">
+    <div className="flex flex-col w-full gap-space-lg motion-rise">
       <div className="flex items-center justify-between py-space-xs">
         <button
           type="button"
@@ -63,7 +63,7 @@ export default function ReflectionForm({
                 role="radio"
                 aria-checked={selected}
                 onClick={() => setTimeOfDay(time)}
-                className={`py-space-sm rounded-full font-label-md text-label-md text-center transition-colors ${
+                className={`py-space-sm rounded-full font-label-md text-label-md text-center motion-interactive transition-colors ${
                   selected
                     ? "bg-primary-container text-on-primary-fixed font-semibold"
                     : "bg-surface-container-high text-on-surface-variant"
@@ -117,7 +117,7 @@ export default function ReflectionForm({
           type="button"
           disabled={saving}
           onClick={() => onSave({ timeOfDay, note: note.trim() || null })}
-          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center active:scale-[0.98] disabled:opacity-50 transition-transform"
+          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center motion-interactive active:scale-[0.98] disabled:opacity-50 transition-transform"
         >
           {saving ? "Saving..." : "Save & complete reset"}
         </button>
@@ -125,7 +125,7 @@ export default function ReflectionForm({
           type="button"
           disabled={saving}
           onClick={onSkip}
-          className="w-full h-13 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md font-semibold flex items-center justify-center hover:bg-surface-container-highest hover:text-on-surface active:scale-[0.98] transition-all disabled:opacity-50"
+          className="w-full h-13 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md font-semibold flex items-center justify-center motion-interactive hover:bg-surface-container-highest hover:text-on-surface active:scale-[0.98] transition-all disabled:opacity-50"
         >
           Skip and finish
         </button>

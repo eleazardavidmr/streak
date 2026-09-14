@@ -43,7 +43,7 @@ export default function ActivityHeatmap({
           ))}
         </div>
 
-        <div className="grid grid-rows-7 grid-flow-col gap-0.75 select-none">
+        <div className="grid grid-rows-7 grid-flow-col gap-0.75 select-none motion-grid">
           {distribution.map((level, index) => (
             <div
               key={index}

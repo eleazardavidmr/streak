@@ -1,10 +1,15 @@
 import { IconBolt, IconCircleCheck, IconX } from "@tabler/icons-react";
 
-export default function ActionConfirmation({ action, onDone, onChangeAction, onClose }) {
+export default function ActionConfirmation({
+  action,
+  onDone,
+  onChangeAction,
+  onClose,
+}) {
   const title = action?.title ?? "Reset action";
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full motion-rise">
       <div className="flex items-center justify-between py-space-xs mb-space-md">
         <button
           type="button"
@@ -83,7 +88,7 @@ export default function ActionConfirmation({ action, onDone, onChangeAction, onC
         <button
           type="button"
           onClick={onDone}
-          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs active:scale-[0.98] transition-transform"
+          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] transition-transform"
         >
           <IconCircleCheck size={20} stroke={2} />
           Mark as done

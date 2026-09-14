@@ -287,10 +287,6 @@ body {
     background-color 180ms ease;
 }
 
-.motion-interactive:hover {
-  transform: translateY(-2px);
-}
-
 .motion-interactive:active {
   transform: translateY(0) scale(0.98);
 }

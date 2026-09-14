@@ -7,6 +7,7 @@ export default function Layout({
   onSignOut,
   activeTab,
   onTabChange,
+  showBottomNav = true,
 }) {
   return (
     <div className="min-h-screen bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container">
@@ -14,7 +15,7 @@ export default function Layout({
       <div key={activeTab} className="motion-page">
         {children}
       </div>
-      <BottomNav active={activeTab} onChange={onTabChange} />
+      {showBottomNav && <BottomNav active={activeTab} onChange={onTabChange} />}
     </div>
   );
 }

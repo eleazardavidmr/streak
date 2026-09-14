@@ -8,7 +8,7 @@ export default function UrgeSupport() {
     <div className="flex flex-col gap-space-md">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="w-full bg-transparent text-center font-body-md text-body-md text-outline motion-interactive hover:text-on-surface transition-colors duration-150 py-space-xs select-none"
+        className="w-full bg-transparent text-center font-body-md text-body-md text-outline motion-interactive hover:text-on-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-container transition-colors duration-150 py-space-xs select-none"
       >
         I'm feeling an urge right now
       </button>

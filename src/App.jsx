@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import Achievements from "./pages/Achievements.jsx";
 import Settings from "./pages/Settings.jsx";
+import ResetPage from "./pages/ResetPage.jsx";
 import Layout from "./layouts/Layout.jsx";
 import { supabase } from "./lib/supabase.js";
 import { defaultProfile, loadProfile } from "./lib/profile.js";
@@ -124,20 +125,22 @@ function App() {
   }
 
   const activeTab = pathToTab(location);
+  const isResetPage = location.startsWith("/reset");
 
-  const page =
-    activeTab === "achievements" ? (
-      <Achievements />
-    ) : activeTab === "settings" ? (
-      <Settings
-        user={session.user}
-        profile={profile}
-        onProfileChange={setProfile}
-        onSignOut={handleSignOut}
-      />
-    ) : (
-      <Dashboard profile={profile} />
-    );
+  const page = isResetPage ? (
+    <ResetPage onNavigate={navigate} />
+  ) : activeTab === "achievements" ? (
+    <Achievements />
+  ) : activeTab === "settings" ? (
+    <Settings
+      user={session.user}
+      profile={profile}
+      onProfileChange={setProfile}
+      onSignOut={handleSignOut}
+    />
+  ) : (
+    <Dashboard profile={profile} onNavigate={navigate} />
+  );
 
   return (
     <Layout
@@ -145,6 +148,7 @@ function App() {
       onSignOut={handleSignOut}
       activeTab={activeTab}
       onTabChange={(tab) => navigate(tabPaths[tab])}
+      showBottomNav={!isResetPage}
     >
       {profileError ? (
         <main className="px-margin pt-nav text-body-md text-error">

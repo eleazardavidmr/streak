@@ -17,7 +17,7 @@ import {
 } from "../lib/checkins.js";
 import { getRelapses } from "../lib/relapses.js";
 
-export default function Dashboard({ profile }) {
+export default function Dashboard({ profile, onNavigate }) {
   const [checkinDates, setCheckinDates] = useState([]);
   const [relapseDates, setRelapseDates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -125,6 +125,7 @@ export default function Dashboard({ profile }) {
             checkinDates={checkinDates}
             hasCheckedInToday={checkedIn}
             onComplete={handleResetComplete}
+            onNavigate={onNavigate}
           />
         </div>
 

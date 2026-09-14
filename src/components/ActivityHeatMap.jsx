@@ -1,8 +1,13 @@
-const colorClasses = [
-  "bg-surface-container-high",
-  "bg-secondary-container",
-  "bg-secondary",
-  "bg-primary-container",
+const cellClasses = {
+  0: "bg-surface-container-high",
+  1: "bg-surface-container-highest",
+  3: "bg-primary-container",
+};
+
+const legend = [
+  { label: "Empty", className: cellClasses[0] },
+  { label: "Setback", className: cellClasses[1] },
+  { label: "Clean", className: cellClasses[3] },
 ];
 
 export default function ActivityHeatmap({
@@ -13,6 +18,7 @@ export default function ActivityHeatmap({
 }) {
   const weekdayLabels =
     weekStartsOn === "sunday" ? ["S", "T", "T"] : ["M", "W", "F"];
+
   return (
     <div className="flex flex-col gap-space-sm">
       <div className="flex items-center justify-between">
@@ -25,8 +31,8 @@ export default function ActivityHeatmap({
       </div>
 
       <div className="flex justify-between text-outline font-label-sm text-label-sm px-5.5 pt-space-xs">
-        {months.map((m) => (
-          <span key={m}>{m}</span>
+        {months.map((month) => (
+          <span key={month}>{month}</span>
         ))}
       </div>
 
@@ -38,25 +44,28 @@ export default function ActivityHeatmap({
         </div>
 
         <div className="grid grid-rows-7 grid-flow-col gap-0.75 select-none">
-          {distribution.map((level, i) => (
+          {distribution.map((level, index) => (
             <div
-              key={i}
-              className={`w-2.5 h-2.5 rounded-xs transition-transform duration-100 hover:scale-125 ${colorClasses[level]}`}
+              key={index}
+              className={`w-2.5 h-2.5 rounded-xs transition-transform duration-100 hover:scale-125 ${cellClasses[level] ?? cellClasses[0]}`}
             />
           ))}
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-space-xs">
+      <div className="flex items-center justify-between pt-space-xs gap-space-sm">
         <span className="font-label-sm text-label-sm text-outline">
           {loggedDays} days logged
         </span>
-        <div className="flex items-center gap-space-xs">
-          <span className="font-label-sm text-label-sm text-outline">Less</span>
-          {colorClasses.map((c) => (
-            <div key={c} className={`w-2.25 h-2.25 rounded-xs ${c}`} />
+        <div className="flex items-center gap-space-sm">
+          {legend.map((item) => (
+            <div key={item.label} className="flex items-center gap-space-xs">
+              <div className={`w-2.25 h-2.25 rounded-xs ${item.className}`} />
+              <span className="font-label-sm text-label-sm text-outline">
+                {item.label}
+              </span>
+            </div>
           ))}
-          <span className="font-label-sm text-label-sm text-outline">More</span>
         </div>
       </div>
     </div>

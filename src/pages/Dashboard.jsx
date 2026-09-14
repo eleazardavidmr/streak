@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import StreakHero from "../components/StreakHero.jsx";
 import CheckinButton from "../components/CheckInButton.jsx";
 import UrgentSupport from "../components/UrgenSupport.jsx";
+import ResetFlow from "../components/ResetFlow.jsx";
 import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import {
@@ -14,9 +15,11 @@ import {
   markTodayClean,
   undoTodayCheckin,
 } from "../lib/checkins.js";
+import { getRelapses } from "../lib/relapses.js";
 
 export default function Dashboard({ profile }) {
   const [checkinDates, setCheckinDates] = useState([]);
+  const [relapseDates, setRelapseDates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -24,10 +27,11 @@ export default function Dashboard({ profile }) {
   useEffect(() => {
     let mounted = true;
 
-    getCheckins()
-      .then((dates) => {
+    Promise.all([getCheckins(), getRelapses()])
+      .then(([dates, relapses]) => {
         if (mounted) {
           setCheckinDates(dates);
+          setRelapseDates(relapses);
         }
       })
       .catch(() => {
@@ -67,6 +71,18 @@ export default function Dashboard({ profile }) {
     }
   };
 
+  const handleResetComplete = ({ removedToday }) => {
+    const today = getTodayDate();
+
+    if (removedToday) {
+      setCheckinDates((dates) => dates.filter((date) => date !== today));
+    }
+
+    setRelapseDates((dates) =>
+      dates.includes(today) ? dates : [...dates, today],
+    );
+  };
+
   const checkedIn = hasCheckedInToday(checkinDates);
   const streak = calculateCurrentStreak(checkinDates);
   const bestStreak = calculateBestStreak(checkinDates);
@@ -74,6 +90,7 @@ export default function Dashboard({ profile }) {
     checkinDates,
     16,
     profile.weekStartsOn,
+    relapseDates,
   );
 
   if (loading) {
@@ -101,6 +118,12 @@ export default function Dashboard({ profile }) {
             disabled={saving}
           />
           <UrgentSupport />
+          <ResetFlow
+            streak={streak}
+            checkinDates={checkinDates}
+            hasCheckedInToday={checkedIn}
+            onComplete={handleResetComplete}
+          />
         </div>
 
         {error && (

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-tint": "#a4d64c", "surface-container-low": "#1c1b1b", "outline": "#8d937e", "on-surface-variant": "#c3c9b2", "surface-container-lowest": "#0e0e0e", "surface-container-highest": "#353534", "secondary-fixed": "#ceee93", "on-primary-container": "#4b6e00", "inverse-on-surface": "#313030", "on-secondary-fixed-variant": "#364e03", "on-secondary": "#243600", "primary": "#fefff1", "surface": "#131313", "tertiary": "#fffeff", "primary-fixed-dim": "#a4d64c", "tertiary-fixed-dim": "#cfc0e3", "on-primary-fixed": "#131f00", "on-primary-fixed-variant": "#354e00", "on-error-container": "#ffdad6", "secondary": "#b3d17a", "surface-container-high": "#2a2a2a", "on-secondary-container": "#a5c36d", "on-tertiary-container": "#6a5e7d", "surface-bright": "#3a3939", "tertiary-container": "#ebdbff", "outline-variant": "#434938", "secondary-fixed-dim": "#b3d17a", "surface-container": "#201f1f", "on-background": "#e5e2e1", "on-tertiary-fixed-variant": "#4d425e", "primary-container": "#bef264", "inverse-primary": "#476800", "on-tertiary-fixed": "#201731", "on-error": "#690005", "on-primary": "#233600", "surface-dim": "#131313", "on-surface": "#e5e2e1", "error": "#ffb4ab", "error-container": "#93000a", "on-tertiary": "#362b47", "primary-fixed": "#bff365", "secondary-container": "#385005", "background": "#131313", "tertiary-fixed": "#ecdcff", "on-secondary-fixed": "#131f00", "inverse-surface": "#e5e2e1", "surface-variant": "#353534" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "gutter": "1rem", "space-xs": "0.25rem", "space-md": "1rem", "space-sm": "0.5rem", "margin": "1.25rem", "space-lg": "1.5rem", "space-xl": "2.5rem" }, "fontFamily": { "label-md": ["Inter"], "display-lg": ["Inter"], "display-sm": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"], "display-lg-mobile": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "label-sm": ["Inter"] }, "fontSize": { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.05em", "fontWeight": "600" }], "display-sm": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.04em", "fontWeight": "500" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.025em", "fontWeight": "500" }], "display-lg-mobile": ["38px", { "lineHeight": "42px", "letterSpacing": "-0.045em", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.03em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.tab-indicator{opacity:0;transition:opacity 0.2s ease-in-out;}[data-active="true"] .tab-indicator{opacity:1;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><h1 class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">Achievements</h1><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full px-margin pt-16 pb-24 bg-surface"><div class="flex flex-col w-full max-w-md mx-auto space-y-space-lg">
+<div class="flex items-center justify-between py-space-xs">
+<button aria-label="Go back" class="flex items-center justify-center w-10 h-10 -ml-2 text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none" onclick="history.back()" type="button">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+</button>
+<button class="font-label-md text-label-md tracking-wider uppercase text-on-surface hover:text-primary-container px-3 py-2 transition-colors focus:outline-none" id="skip-top-btn" type="button">
+      Skip
+    </button>
+</div>
+<div class="flex flex-col space-y-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-container font-semibold">Step 4 of 4</span>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight font-semibold">
+      Want to note what happened?
+    </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant pt-1">
+      Completely optional. Patterns help you safeguard future streaks.
+    </p>
+</div>
+<div class="flex flex-col space-y-space-sm pt-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline font-semibold">Time of Day</span>
+<div aria-label="Time of Day" class="grid grid-cols-4 gap-2" role="radiogroup">
+<button aria-checked="false" class="time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-surface-container-high text-on-surface-variant transition-all hover:bg-surface-variant focus:outline-none" data-val="morning" role="radio" type="button">
+        Morning
+      </button>
+<button aria-checked="true" class="time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-primary-container text-on-primary font-semibold transition-all focus:outline-none" data-val="afternoon" role="radio" type="button">
+        Afternoon
+      </button>
+<button aria-checked="false" class="time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-surface-container-high text-on-surface-variant transition-all hover:bg-surface-variant focus:outline-none" data-val="evening" role="radio" type="button">
+        Evening
+      </button>
+<button aria-checked="false" class="time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-surface-container-high text-on-surface-variant transition-all hover:bg-surface-variant focus:outline-none" data-val="night" role="radio" type="button">
+        Night
+      </button>
+</div>
+</div>
+<div class="flex flex-col space-y-space-sm pt-2">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm uppercase tracking-widest text-outline font-semibold" for="reflection-notes">Observations</label>
+<span class="font-label-sm text-label-sm text-outline" id="char-counter">0 / 280</span>
+</div>
+<div class="relative bg-surface-container-low rounded-DEFAULT p-space-md transition-colors focus-within:bg-surface-container">
+<textarea class="w-full bg-transparent font-body-lg text-body-lg text-on-surface placeholder:text-outline focus:outline-none resize-none leading-relaxed" id="reflection-notes" maxlength="280" placeholder="What triggered this? (optional)... e.g. stress, fatigue, loneliness, boredom" rows="5"></textarea>
+</div>
+</div>
+<div class="flex items-center gap-space-sm px-space-xs text-on-surface-variant pt-2">
+<span class="material-symbols-outlined text-[18px] text-primary-container" style="font-variation-settings: 'FILL' 1;">lock</span>
+<p class="font-label-md text-label-md">
+      This note stays encrypted on your device only.
+    </p>
+</div>
+<div class="flex flex-col space-y-space-md pt-4">
+<button class="w-full h-[52px] rounded-full bg-primary-container text-on-primary font-label-md text-label-md tracking-wide font-semibold flex items-center justify-center active:scale-[0.98] transition-all" id="save-btn" type="button">
+      Save &amp; complete reset
+    </button>
+<button class="w-full py-2 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors text-center focus:outline-none" id="skip-bottom-btn" type="button">
+      Skip and finish
+    </button>
+</div>
+</div>
+<script>
+  (function() {
+    const pills = document.querySelectorAll('.time-pill');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => {
+          p.setAttribute('aria-checked', 'false');
+          p.className = 'time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-surface-container-high text-on-surface-variant transition-all hover:bg-surface-variant focus:outline-none';
+        });
+        pill.setAttribute('aria-checked', 'true');
+        pill.className = 'time-pill py-2.5 rounded-full font-label-md text-label-md text-center bg-primary-container text-on-primary font-semibold transition-all focus:outline-none';
+      });
+    });
+
+    const textarea = document.getElementById('reflection-notes');
+    const counter = document.getElementById('char-counter');
+    if (textarea && counter) {
+      textarea.addEventListener('input', () => {
+        counter.textContent = `${textarea.value.length} / 280`;
+      });
+    }
+
+    const finishFlow = (saved) => {
+      const saveBtn = document.getElementById('save-btn');
+      if (saveBtn) {
+        saveBtn.innerText = saved ? 'Completed' : 'Reset Finished';
+        saveBtn.classList.add('opacity-80');
+      }
+      setTimeout(() => {
+        window.location.hash = '#dashboard';
+      }, 400);
+    };
+
+    document.getElementById('save-btn')?.addEventListener('click', () => finishFlow(true));
+    document.getElementById('skip-top-btn')?.addEventListener('click', () => finishFlow(false));
+    document.getElementById('skip-bottom-btn')?.addEventListener('click', () => finishFlow(false));
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary [&amp;_.tab-indicator]:opacity-100"><div class="flex items-center justify-around h-16 px-margin"><a class="relative flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-outline hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[24px]">radio_button_checked</span><span class="tab-indicator absolute bottom-1 w-[3px] h-[3px] rounded-full bg-primary-container pointer-events-none"></span></a><a aria-current="page" class="relative flex flex-col items-center justify-center min-w-[44px] min-h-[44px] transition-colors text-primary [&amp;_.tab-indicator]:opacity-100" data-path="achievements" href="#"><span class="material-symbols-outlined text-[24px]">award_star</span><span class="tab-indicator absolute bottom-1 w-[3px] h-[3px] rounded-full bg-primary-container pointer-events-none"></span></a><a class="relative flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-outline hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[24px]">tune</span><span class="tab-indicator absolute bottom-1 w-[3px] h-[3px] rounded-full bg-primary-container pointer-events-none"></span></a></div></nav></body></html>

@@ -8,6 +8,8 @@ export const defaultProfile = {
   weekStartsOn: "monday",
   reminderEnabled: false,
   showBestStreak: true,
+  runningGoalDate: "",
+  runningGoalLabel: "",
   email: "",
 };
 
@@ -26,6 +28,8 @@ function rowToProfile(row, user) {
     weekStartsOn: row?.week_starts_on === "sunday" ? "sunday" : "monday",
     reminderEnabled: Boolean(row?.reminder_enabled),
     showBestStreak: row?.show_best_streak !== false,
+    runningGoalDate: row?.running_goal_date ?? "",
+    runningGoalLabel: row?.running_goal_label ?? "",
     email: user?.email ?? "",
   };
 }
@@ -38,6 +42,8 @@ function profileToRow(userId, profile) {
     week_starts_on: profile.weekStartsOn === "sunday" ? "sunday" : "monday",
     reminder_enabled: Boolean(profile.reminderEnabled),
     show_best_streak: profile.showBestStreak !== false,
+    running_goal_date: profile.runningGoalDate || null,
+    running_goal_label: profile.runningGoalLabel?.trim() ?? "",
     updated_at: new Date().toISOString(),
   };
 }
@@ -46,7 +52,7 @@ export async function loadProfile(user) {
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "display_name, avatar_url, week_starts_on, reminder_enabled, show_best_streak",
+      "display_name, avatar_url, week_starts_on, reminder_enabled, show_best_streak, running_goal_date, running_goal_label",
     )
     .eq("id", user.id)
     .maybeSingle();
@@ -69,6 +75,8 @@ export async function loadProfile(user) {
     weekStartsOn: local.weekStartsOn === "sunday" ? "sunday" : "monday",
     reminderEnabled: Boolean(local.reminderEnabled),
     showBestStreak: local.showBestStreak !== false,
+    runningGoalDate: "",
+    runningGoalLabel: "",
     email: user.email ?? "",
   };
 

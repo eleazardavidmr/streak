@@ -27,10 +27,11 @@ function normalizeDates(checkinDates) {
   );
 }
 
-export async function getCheckins() {
+export async function getCheckins(habit = "abstinence") {
   const { data, error } = await supabase
     .from("checkins")
     .select("checkin_date")
+    .eq("habit", habit)
     .order("checkin_date", { ascending: true });
 
   if (error) {
@@ -44,7 +45,7 @@ export function hasCheckedInToday(checkinDates) {
   return normalizeDates(checkinDates).has(toDateString());
 }
 
-export async function markTodayClean() {
+export async function markTodayClean(habit = "abstinence") {
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError) {
@@ -53,6 +54,7 @@ export async function markTodayClean() {
 
   const { error } = await supabase.from("checkins").insert({
     user_id: userData.user.id,
+    habit,
     checkin_date: toDateString(),
   });
 
@@ -61,7 +63,7 @@ export async function markTodayClean() {
   }
 }
 
-export async function undoTodayCheckin() {
+export async function undoTodayCheckin(habit = "abstinence") {
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError) {
@@ -72,6 +74,7 @@ export async function undoTodayCheckin() {
     .from("checkins")
     .delete()
     .eq("user_id", userData.user.id)
+    .eq("habit", habit)
     .eq("checkin_date", toDateString());
 
   if (error) {

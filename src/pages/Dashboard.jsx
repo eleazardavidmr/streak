@@ -5,6 +5,7 @@ import CheckinButton from "../components/CheckInButton.jsx";
 import UrgentSupport from "../components/UrgenSupport.jsx";
 import ResetFlow from "../components/ResetFlow.jsx";
 import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
+import RunningStreak from "../components/RunningStreak.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import {
   buildHeatmapDistribution,
@@ -183,6 +184,17 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
           initial="hidden"
           animate="visible"
           transition={{ ...springSoft, delay: 0.18 }}
+        >
+          <RunningStreak profile={profile} />
+        </motion.div>
+
+        <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
+
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.24 }}
         >
           <FocusPrinciples />
         </motion.div>

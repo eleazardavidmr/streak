@@ -3,29 +3,34 @@ import { motion } from "framer-motion";
 const cellClasses = {
   0: "bg-surface-container-high",
   1: "bg-surface-container-highest",
-  3: "bg-primary-container",
 };
-
-const legend = [
-  { label: "Empty", className: cellClasses[0] },
-  { label: "Setback", className: cellClasses[1] },
-  { label: "Clean", className: cellClasses[3] },
-];
 
 export default function ActivityHeatmap({
   distribution = [],
   loggedDays = 0,
   months = [],
   weekStartsOn = "monday",
+  title = "Discipline cadence",
+  doneClassName = "bg-primary-container",
+  doneLabel = "Clean",
+  showSetbackTier = true,
 }) {
   const weekdayLabels =
     weekStartsOn === "sunday" ? ["S", "T", "T"] : ["M", "W", "F"];
+
+  const legend = [
+    { label: "Empty", className: cellClasses[0] },
+    ...(showSetbackTier
+      ? [{ label: "Setback", className: cellClasses[1] }]
+      : []),
+    { label: doneLabel, className: doneClassName },
+  ];
 
   return (
     <div className="flex flex-col gap-space-sm">
       <div className="flex items-center justify-between">
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
-          Discipline cadence
+          {title}
         </span>
         <span className="font-label-sm text-label-sm text-on-surface-variant">
           Last 16 weeks
@@ -58,7 +63,11 @@ export default function ActivityHeatmap({
                 delay: (index % 7) * 0.015 + Math.floor(index / 7) * 0.006,
               }}
               whileHover={{ scale: 1.25 }}
-              className={`w-2.5 h-2.5 rounded-xs ${cellClasses[level] ?? cellClasses[0]}`}
+              className={`w-2.5 h-2.5 rounded-xs ${
+                level === 3
+                  ? doneClassName
+                  : (cellClasses[level] ?? cellClasses[0])
+              }`}
             />
           ))}
         </div>

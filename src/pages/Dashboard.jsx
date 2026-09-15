@@ -7,6 +7,7 @@ import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import {
   buildHeatmapDistribution,
+  buildHeatmapMonths,
   calculateBestStreak,
   calculateCurrentStreak,
   getTodayDate,
@@ -94,6 +95,7 @@ export default function Dashboard({ profile, onNavigate }) {
     profile.weekStartsOn,
     relapseDates,
   );
+  const heatmapMonths = buildHeatmapMonths(16, profile.weekStartsOn);
 
   if (loading) {
     return (
@@ -141,6 +143,7 @@ export default function Dashboard({ profile, onNavigate }) {
         <div className="motion-rise" style={{ animationDelay: "180ms" }}>
           <ActivityHeatmap
             distribution={distribution}
+            months={heatmapMonths}
             loggedDays={checkinDates.length}
             weekStartsOn={profile.weekStartsOn}
           />

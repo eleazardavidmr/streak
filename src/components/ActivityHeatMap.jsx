@@ -13,7 +13,7 @@ const legend = [
 export default function ActivityHeatmap({
   distribution = [],
   loggedDays = 0,
-  months = ["Jul", "Aug", "Sep", "Oct"],
+  months = [],
   weekStartsOn = "monday",
 }) {
   const weekdayLabels =

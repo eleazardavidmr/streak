@@ -27,7 +27,7 @@ export default function AuthPage({ mode, onNavigate }) {
     }
 
     if (isRegister && !result.data.session) {
-      setNotice("Revisa tu correo para confirmar la cuenta.");
+      setNotice("Check your email to confirm your account.");
     }
   };
 

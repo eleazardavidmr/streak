@@ -116,6 +116,18 @@ export function calculateBestStreak(checkinDates) {
   return bestStreak;
 }
 
+function getHeatmapRange(weeks, weekStartsOn) {
+  const totalDays = weeks * 7;
+  const weekStart = weekStartsOn === "sunday" ? 0 : 1;
+  const lastDate = toDateString();
+  const lastDay = new Date(`${lastDate}T00:00:00`).getDay();
+  const shift = (lastDay - weekStart + 7) % 7;
+  const endDate = addDays(lastDate, 6 - shift);
+  const firstDate = addDays(endDate, -(totalDays - 1));
+
+  return { firstDate, totalDays };
+}
+
 export function buildHeatmapDistribution(
   checkinDates,
   weeks = 16,
@@ -124,13 +136,7 @@ export function buildHeatmapDistribution(
 ) {
   const dates = normalizeDates(checkinDates);
   const relapses = normalizeDates(relapseDates);
-  const totalDays = weeks * 7;
-  const weekStart = weekStartsOn === "sunday" ? 0 : 1;
-  const lastDate = toDateString();
-  const lastDay = new Date(`${lastDate}T00:00:00`).getDay();
-  const shift = (lastDay - weekStart + 7) % 7;
-  const endDate = addDays(lastDate, 6 - shift);
-  const firstDate = addDays(endDate, -(totalDays - 1));
+  const { firstDate, totalDays } = getHeatmapRange(weeks, weekStartsOn);
 
   return Array.from({ length: totalDays }, (_, index) => {
     const date = addDays(firstDate, index);
@@ -145,4 +151,26 @@ export function buildHeatmapDistribution(
 
     return 0;
   });
+}
+
+export function buildHeatmapMonths(weeks = 16, weekStartsOn = "monday") {
+  const { firstDate, totalDays } = getHeatmapRange(weeks, weekStartsOn);
+  const months = [];
+  let lastMonth = null;
+
+  for (let index = 0; index < totalDays; index += 1) {
+    const date = addDays(firstDate, index);
+    const month = date.slice(0, 7);
+
+    if (month !== lastMonth) {
+      lastMonth = month;
+      months.push(
+        new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
+          month: "short",
+        }),
+      );
+    }
+  }
+
+  return months;
 }

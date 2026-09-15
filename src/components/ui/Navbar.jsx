@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IconLogout, IconUser } from "@tabler/icons-react";
 import { defaultProfile } from "../../lib/profile.js";
 import BrandMark from "./BrandMark.jsx";
@@ -11,11 +11,14 @@ export default function Navbar({
   const { displayName, avatarUrl, email } = profile;
   const label = displayName || email;
   const [brokenImage, setBrokenImage] = useState(false);
-  const showAvatar = avatarUrl && !brokenImage;
+  const [lastAvatarUrl, setLastAvatarUrl] = useState(avatarUrl);
 
-  useEffect(() => {
+  if (avatarUrl !== lastAvatarUrl) {
+    setLastAvatarUrl(avatarUrl);
     setBrokenImage(false);
-  }, [avatarUrl]);
+  }
+
+  const showAvatar = avatarUrl && !brokenImage;
 
   return (
     <header className="fixed top-0 w-full z-50 pt-safe bg-surface motion-slide-down">
@@ -23,7 +26,7 @@ export default function Navbar({
         <button
           type="button"
           onClick={() => onNavigate?.("/")}
-          aria-label="Ir a la página principal"
+          aria-label="Go to dashboard"
           className="flex items-center gap-space-sm font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container rounded-lg"
         >
           <BrandMark />
@@ -36,7 +39,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={() => onNavigate?.("/settings")}
-            aria-label="Abrir configuración"
+            aria-label="Open settings"
             className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container"
           >
             {showAvatar ? (
@@ -53,7 +56,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={onSignOut}
-            aria-label="Cerrar sesión"
+            aria-label="Sign out"
             className="w-10 h-10 flex items-center justify-center text-outline hover:text-on-surface transition-colors"
           >
             <IconLogout size={18} stroke={1.8} />

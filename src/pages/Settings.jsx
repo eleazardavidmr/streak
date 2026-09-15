@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   IconBell,
   IconCalendarWeek,
@@ -32,6 +32,9 @@ function Toggle({
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
       onClick={() => onChange(!checked)}
       disabled={disabled}
       className="w-full flex items-center justify-between gap-space-md py-space-md text-left motion-interactive disabled:opacity-50"
@@ -46,6 +49,7 @@ function Toggle({
         </div>
       </div>
       <span
+        aria-hidden="true"
         className={`relative w-11 h-6 rounded-full shrink-0 transition-colors ${
           checked ? "bg-primary-container" : "bg-surface-container-highest"
         }`}
@@ -72,12 +76,17 @@ export default function Settings({
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [brokenImage, setBrokenImage] = useState(false);
+  const [lastProfile, setLastProfile] = useState(profile);
 
-  useEffect(() => {
+  if (
+    profile.displayName !== lastProfile.displayName ||
+    profile.avatarUrl !== lastProfile.avatarUrl
+  ) {
+    setLastProfile(profile);
     setDisplayName(profile.displayName);
     setAvatarUrl(profile.avatarUrl);
     setBrokenImage(false);
-  }, [profile.displayName, profile.avatarUrl]);
+  }
 
   const persist = async (nextProfile) => {
     setError("");

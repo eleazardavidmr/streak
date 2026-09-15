@@ -1,25 +1,26 @@
+import { IconBolt } from "@tabler/icons-react";
 import { useState } from "react";
-import { IconBolt, IconX } from "@tabler/icons-react";
 import ActionConfirmationModal from "./ActionConfirmationModal.jsx";
 
-export default function UrgeSupport() {
-  const [open, setOpen] = useState(false);
+export default function UrgeSupport({ onNavigate }) {
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <div className="col-span-3 flex flex-col gap-space-md sm:col-span-1">
+    <div className="flex w-full flex-col gap-space-md">
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        aria-expanded={open}
-        className="w-12 h-12 px-4 py-2 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex flex-col items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
+        className="flex min-h-16 w-full items-center gap-space-md rounded-xl bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive active:scale-[0.99] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
       >
-        <IconBolt size={20} stroke={2} />
-        {/* 
-
-
-        <span className="text-center">Urge support</span>
-        */}
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-container-highest">
+          <IconBolt size={20} stroke={2} />
+        </span>
+        <span className="flex min-w-0 flex-col">
+          <span className="font-label-md text-label-md">Urge support</span>
+          <span className="font-label-sm text-label-sm text-outline">
+            Slow down and ground yourself now.
+          </span>
+        </span>
       </button>
 
       <ActionConfirmationModal
@@ -31,37 +32,9 @@ export default function UrgeSupport() {
         onClose={() => setConfirming(false)}
         onConfirm={() => {
           setConfirming(false);
-          setOpen(true);
+          onNavigate?.("/support");
         }}
       />
-
-      {open && (
-        <div className="flex flex-col bg-surface-container-low rounded-xl p-space-md gap-space-sm transition-all motion-panel">
-          <div className="flex items-center justify-between">
-            <span className="font-label-md text-label-md text-primary-container uppercase tracking-wider">
-              Grounding protocol
-            </span>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-outline hover:text-on-surface"
-            >
-              <IconX size={18} stroke={2} />
-            </button>
-          </div>
-
-          <p className="font-body-md text-body-md text-on-surface-variant">
-            Urges peak within 15 minutes and dissipate like a wave. Breathe out
-            slowly for 4 seconds, ground your feet against the floor.
-          </p>
-
-          <div className="flex items-center gap-space-sm pt-space-xs">
-            <div className="w-2 h-2 rounded-full bg-primary-container animate-pulse" />
-            <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider">
-              60-second reset engaged
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

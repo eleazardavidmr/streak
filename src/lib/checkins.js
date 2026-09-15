@@ -126,10 +126,11 @@ export function buildHeatmapDistribution(
   const relapses = normalizeDates(relapseDates);
   const totalDays = weeks * 7;
   const weekStart = weekStartsOn === "sunday" ? 0 : 1;
-  let firstDate = addDays(toDateString(), -(totalDays - 1));
-  const firstDay = new Date(`${firstDate}T00:00:00`).getDay();
-  const shift = (firstDay - weekStart + 7) % 7;
-  firstDate = addDays(firstDate, -shift);
+  const lastDate = toDateString();
+  const lastDay = new Date(`${lastDate}T00:00:00`).getDay();
+  const shift = (lastDay - weekStart + 7) % 7;
+  const endDate = addDays(lastDate, 6 - shift);
+  const firstDate = addDays(endDate, -(totalDays - 1));
 
   return Array.from({ length: totalDays }, (_, index) => {
     const date = addDays(firstDate, index);

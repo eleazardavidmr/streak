@@ -119,19 +119,22 @@ export default function ResetFlow({
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <button
         type="button"
         onClick={() => setConfirming(true)}
         aria-label="Open reset support"
-        className="w-12 h-12 px-4 py-2 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex flex-col items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
+        className="flex min-h-16 w-full items-center gap-space-md rounded-xl bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive active:scale-[0.99] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
       >
-        <IconRefresh size={18} stroke={2.25} />
-        {/*
-
-
-        <span className="text-center">Reset together</span>
-        */}
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-container-highest">
+          <IconRefresh size={18} stroke={2.25} />
+        </span>
+        <span className="flex min-w-0 flex-col">
+          <span className="font-label-md text-label-md">Reset together</span>
+          <span className="font-label-sm text-label-sm text-outline">
+            Reflect, choose your next action, and restart.
+          </span>
+        </span>
       </button>
       <ActionConfirmationModal
         open={confirming}

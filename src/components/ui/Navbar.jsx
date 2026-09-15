@@ -3,7 +3,11 @@ import { IconLogout, IconUser } from "@tabler/icons-react";
 import { defaultProfile } from "../../lib/profile.js";
 import BrandMark from "./BrandMark.jsx";
 
-export default function Navbar({ profile = defaultProfile, onSignOut }) {
+export default function Navbar({
+  profile = defaultProfile,
+  onSignOut,
+  onNavigate,
+}) {
   const { displayName, avatarUrl, email } = profile;
   const label = displayName || email;
   const [brokenImage, setBrokenImage] = useState(false);
@@ -16,15 +20,25 @@ export default function Navbar({ profile = defaultProfile, onSignOut }) {
   return (
     <header className="fixed top-0 w-full z-50 pt-safe bg-surface motion-slide-down">
       <div className="h-16 px-margin flex items-center justify-between">
-        <h1 className="flex items-center gap-space-sm font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">
+        <button
+          type="button"
+          onClick={() => onNavigate?.("/")}
+          aria-label="Ir a la página principal"
+          className="flex items-center gap-space-sm font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container rounded-lg"
+        >
           <BrandMark />
           Streak
-        </h1>
+        </button>
         <div className="flex items-center gap-space-sm">
           <span className="hidden sm:block text-label-sm text-outline max-w-40 truncate">
             {label}
           </span>
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden">
+          <button
+            type="button"
+            onClick={() => onNavigate?.("/settings")}
+            aria-label="Abrir configuración"
+            className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container"
+          >
             {showAvatar ? (
               <img
                 src={avatarUrl}
@@ -35,7 +49,7 @@ export default function Navbar({ profile = defaultProfile, onSignOut }) {
             ) : (
               <IconUser size={18} className="text-on-primary" stroke={2} />
             )}
-          </div>
+          </button>
           <button
             type="button"
             onClick={onSignOut}

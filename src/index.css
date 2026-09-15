@@ -226,6 +226,43 @@ body {
   }
 }
 
+@keyframes motion-checkin-odometer {
+  0% {
+    opacity: 0;
+    transform: translateY(110%) rotateX(-90deg);
+  }
+
+  58% {
+    opacity: 1;
+    transform: translateY(-10%) rotateX(8deg);
+  }
+
+  78% {
+    transform: translateY(3%) rotateX(-2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+.streak-number-window {
+  display: inline-flex;
+  height: 42px;
+  overflow: hidden;
+  align-items: flex-start;
+  perspective: 260px;
+  vertical-align: bottom;
+}
+
+.motion-checkin-odometer {
+  display: inline-block;
+  transform-origin: center bottom;
+  backface-visibility: hidden;
+  animation: motion-checkin-odometer 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .motion-page {
   animation: motion-page-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }

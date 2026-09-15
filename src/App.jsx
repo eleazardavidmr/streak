@@ -4,6 +4,7 @@ import AuthPage from "./pages/AuthPage.jsx";
 import Achievements from "./pages/Achievements.jsx";
 import Settings from "./pages/Settings.jsx";
 import ResetPage from "./pages/ResetPage.jsx";
+import SupportPage from "./pages/SupportPage.jsx";
 import Layout from "./layouts/Layout.jsx";
 import { supabase } from "./lib/supabase.js";
 import { defaultProfile, loadProfile } from "./lib/profile.js";
@@ -126,9 +127,12 @@ function App() {
 
   const activeTab = pathToTab(location);
   const isResetPage = location.startsWith("/reset");
+  const isSupportPage = location.startsWith("/support");
 
   const page = isResetPage ? (
     <ResetPage onNavigate={navigate} />
+  ) : isSupportPage ? (
+    <SupportPage onNavigate={navigate} />
   ) : activeTab === "achievements" ? (
     <Achievements />
   ) : activeTab === "settings" ? (
@@ -146,9 +150,10 @@ function App() {
     <Layout
       profile={profile}
       onSignOut={handleSignOut}
+      onNavigate={navigate}
       activeTab={activeTab}
       onTabChange={(tab) => navigate(tabPaths[tab])}
-      showBottomNav={!isResetPage}
+      showBottomNav={!isResetPage && !isSupportPage}
     >
       {profileError ? (
         <main className="px-margin pt-nav text-body-md text-error">

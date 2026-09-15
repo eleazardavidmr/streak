@@ -23,6 +23,7 @@ export default function Dashboard({ profile, onNavigate }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [checkinCelebration, setCheckinCelebration] = useState(0);
 
   useEffect(() => {
     let mounted = true;
@@ -63,6 +64,7 @@ export default function Dashboard({ profile, onNavigate }) {
       } else {
         await markTodayClean();
         setCheckinDates((dates) => [...dates, getTodayDate()]);
+        setCheckinCelebration((value) => value + 1);
       }
     } catch {
       setError("Unable to update today's check-in.");
@@ -110,16 +112,17 @@ export default function Dashboard({ profile, onNavigate }) {
             bestStreak={bestStreak}
             highlight={checkedIn}
             showBestStreak={profile.showBestStreak}
+            celebrationKey={checkinCelebration}
           />
         </div>
 
-        <div className="flex items-center justify-between rounded-2xl bg-surface-container-low motion-stagger px-5 py-3">
+        <div className="flex flex-col gap-space-sm rounded-xl bg-surface-container-low motion-stagger p-5">
           <CheckinButton
             checkedIn={checkedIn}
             onToggle={handleToggleCheckin}
             disabled={saving}
           />
-          <UrgentSupport />
+          <UrgentSupport onNavigate={onNavigate} />
           <ResetFlow
             streak={streak}
             checkinDates={checkinDates}

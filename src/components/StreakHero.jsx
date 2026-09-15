@@ -12,6 +12,7 @@ export default function StreakHero({
   bestStreak,
   highlight = false,
   showBestStreak = true,
+  celebrationKey = 0,
 }) {
   return (
     <div className="flex flex-col motion-rise">
@@ -23,12 +24,15 @@ export default function StreakHero({
 
       <div className="flex flex-col pt-space-md pb-space-lg">
         <div className="flex items-baseline gap-space-sm">
-          <span
-            className={`font-display-lg-mobile text-display-lg-mobile leading-none tracking-tighter transition-all duration-300 motion-scale-in ${
-              highlight ? "text-primary-container" : "text-primary"
-            }`}
-          >
-            {streak}
+          <span className="streak-number-window" aria-live="polite">
+            <span
+              key={celebrationKey}
+              className={`font-display-lg-mobile text-display-lg-mobile leading-none tracking-tighter ${
+                highlight ? "text-primary-container" : "text-primary"
+              } ${celebrationKey > 0 ? "motion-checkin-odometer" : ""}`}
+            >
+              {streak}
+            </span>
           </span>
           <span className="font-headline-sm text-headline-sm text-on-surface-variant font-normal tracking-tight">
             days clean

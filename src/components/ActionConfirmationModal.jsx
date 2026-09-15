@@ -40,7 +40,7 @@ export default function ActionConfirmationModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex min-h-[100dvh] w-full items-end justify-center bg-black/45 p-margin backdrop-blur-md sm:items-center"
+      className="motion-overlay fixed inset-0 z-[100] flex min-h-[100dvh] w-full items-end justify-center bg-black/45 p-margin backdrop-blur-md sm:items-center"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
@@ -52,7 +52,7 @@ export default function ActionConfirmationModal({
         aria-labelledby="action-confirmation-title"
         aria-describedby="action-confirmation-description"
         aria-modal="true"
-        className="motion-panel w-full max-w-sm rounded-[2rem] border border-white/10 bg-surface-container-high/90 p-space-lg shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl"
+        className="motion-panel motion-stagger w-full max-w-sm rounded-[2rem] border border-white/10 bg-surface-container-high/90 p-space-lg shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl"
         role="dialog"
       >
         <div className="flex items-start justify-between gap-space-md">

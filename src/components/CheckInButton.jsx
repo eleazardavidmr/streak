@@ -9,6 +9,10 @@ export default function CheckinButton({
 }) {
   const [confirming, setConfirming] = useState(false);
   const CheckinIcon = checkedIn ? IconRosetteDiscountCheck : IconCheck;
+  const title = checkedIn ? "Undo today's check-in" : "Mark today as clean";
+  const description = checkedIn
+    ? "Remove today from your clean streak."
+    : "Keep your streak moving forward.";
 
   return (
     <>
@@ -17,13 +21,21 @@ export default function CheckinButton({
         onClick={() => setConfirming(true)}
         disabled={disabled}
         aria-label={checkedIn ? "Undo today's check-in" : "Mark today as clean"}
-        className={`w-12 h-12 rounded-xl px-space-sm py-space-md font-label-md text-label-md font-semibold flex flex-col items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] transition-transform duration-150 select-none disabled:opacity-50 ${
+        className={`w-full min-h-16 rounded-xl px-space-md py-space-sm font-label-md text-label-md font-semibold flex items-center gap-space-md text-left motion-interactive active:scale-[0.99] transition-transform duration-150 select-none disabled:opacity-50 ${
           checkedIn
             ? "bg-surface-container-high text-on-surface-variant"
             : "bg-primary-container text-on-primary-fixed"
         }`}
       >
-        <CheckinIcon size={18} stroke={checkedIn ? 2 : 2.5} />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/10">
+          <CheckinIcon size={19} stroke={checkedIn ? 2 : 2.5} />
+        </span>
+        <span className="flex min-w-0 flex-col">
+          <span className="font-label-md text-label-md">{title}</span>
+          <span className="font-label-sm text-label-sm opacity-70">
+            {description}
+          </span>
+        </span>
       </button>
       <ActionConfirmationModal
         open={confirming}

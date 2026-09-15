@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const cellClasses = {
   0: "bg-surface-container-high",
   1: "bg-surface-container-highest",
@@ -43,11 +45,20 @@ export default function ActivityHeatmap({
           ))}
         </div>
 
-        <div className="grid grid-rows-7 grid-flow-col gap-0.75 select-none motion-grid">
+        <div className="grid grid-rows-7 grid-flow-col gap-0.75 select-none">
           {distribution.map((level, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`w-2.5 h-2.5 rounded-xs transition-transform duration-100 hover:scale-125 ${cellClasses[level] ?? cellClasses[0]}`}
+              initial={{ opacity: 0, scale: 0.4 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 30,
+                delay: (index % 7) * 0.015 + Math.floor(index / 7) * 0.006,
+              }}
+              whileHover={{ scale: 1.25 }}
+              className={`w-2.5 h-2.5 rounded-xs ${cellClasses[level] ?? cellClasses[0]}`}
             />
           ))}
         </div>

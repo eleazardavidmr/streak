@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Dashboard from "./pages/Dashboard.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import Achievements from "./pages/Achievements.jsx";
@@ -8,6 +9,13 @@ import SupportPage from "./pages/SupportPage.jsx";
 import Layout from "./layouts/Layout.jsx";
 import { supabase } from "./lib/supabase.js";
 import { defaultProfile, loadProfile } from "./lib/profile.js";
+import { fadeScale, springSoft } from "./lib/motion.js";
+import {
+  getNotifications,
+  markAllNotificationsRead,
+  markNotificationRead,
+  syncNotifications,
+} from "./lib/notifications.js";
 
 const tabPaths = {
   dashboard: "/",
@@ -31,6 +39,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [profileError, setProfileError] = useState("");
   const [location, setLocation] = useState(window.location.pathname);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -51,6 +60,7 @@ function App() {
       if (!currentSession) {
         setProfile(defaultProfile);
         setProfileError("");
+        setNotifications([]);
         setLoading(false);
       }
     });
@@ -60,6 +70,48 @@ function App() {
       subscription.unsubscribe();
     };
   }, []);
+
+  const refreshNotifications = useCallback(() => {
+    return syncNotifications()
+      .then(setNotifications)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!session?.user) {
+      return undefined;
+    }
+
+    let mounted = true;
+
+    syncNotifications()
+      .then((list) => {
+        if (mounted) {
+          setNotifications(list);
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      mounted = false;
+    };
+  }, [session?.user?.id]);
+
+  const handleMarkNotificationRead = (id) => {
+    setNotifications((list) =>
+      list.map((item) => (item.id === id ? { ...item, read: true } : item)),
+    );
+    markNotificationRead(id).catch(() => {
+      getNotifications().then(setNotifications).catch(() => {});
+    });
+  };
+
+  const handleMarkAllNotificationsRead = () => {
+    setNotifications((list) => list.map((item) => ({ ...item, read: true })));
+    markAllNotificationsRead().catch(() => {
+      getNotifications().then(setNotifications).catch(() => {});
+    });
+  };
 
   useEffect(() => {
     if (!session?.user) {
@@ -110,9 +162,15 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest motion-scale-in">
+      <motion.div
+        variants={fadeScale}
+        initial="hidden"
+        animate="visible"
+        transition={springSoft}
+        className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest"
+      >
         Loading
-      </div>
+      </motion.div>
     );
   }
 
@@ -143,7 +201,11 @@ function App() {
       onSignOut={handleSignOut}
     />
   ) : (
-    <Dashboard profile={profile} onNavigate={navigate} />
+    <Dashboard
+      profile={profile}
+      onNavigate={navigate}
+      onActivityChange={refreshNotifications}
+    />
   );
 
   return (
@@ -152,6 +214,11 @@ function App() {
       onSignOut={handleSignOut}
       onNavigate={navigate}
       activeTab={activeTab}
+      pageKey={location}
+      pageVariant={isResetPage || isSupportPage ? "push" : "tab"}
+      notifications={notifications}
+      onMarkNotificationRead={handleMarkNotificationRead}
+      onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
       onTabChange={(tab) => navigate(tabPaths[tab])}
       showBottomNav={!isResetPage && !isSupportPage}
     >

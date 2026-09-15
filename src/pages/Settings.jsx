@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   IconBell,
   IconCalendarWeek,
@@ -7,6 +8,7 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { saveProfile } from "../lib/profile.js";
+import { fadeRise, springBouncy, springSoft } from "../lib/motion.js";
 
 function isValidHttpUrl(value) {
   if (!value.trim()) {
@@ -37,11 +39,13 @@ function Toggle({
       aria-label={label}
       onClick={() => onChange(!checked)}
       disabled={disabled}
-      className="w-full flex items-center justify-between gap-space-md py-space-md text-left motion-interactive disabled:opacity-50"
+      className="w-full flex items-center justify-between gap-space-md px-space-md py-space-md text-left motion-interactive disabled:opacity-50"
     >
       <div className="flex items-start gap-space-sm min-w-0">
-        <Icon size={18} className="text-outline mt-0.5 shrink-0" stroke={1.8} />
-        <div className="min-w-0">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.5rem] bg-primary-container/15 text-primary-container">
+          <Icon size={16} stroke={1.8} />
+        </span>
+        <div className="min-w-0 pt-0.5">
           <p className="font-body-md text-body-md text-on-surface">{label}</p>
           <p className="font-label-sm text-label-sm text-outline">
             {description}
@@ -50,14 +54,14 @@ function Toggle({
       </div>
       <span
         aria-hidden="true"
-        className={`relative w-11 h-6 rounded-full shrink-0 transition-colors ${
-          checked ? "bg-primary-container" : "bg-surface-container-highest"
+        className={`relative w-11 h-6.5 rounded-full shrink-0 transition-colors duration-200 ${
+          checked ? "bg-primary-container" : "bg-white/12"
         }`}
       >
-        <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-primary transition-transform ${
-            checked ? "translate-x-5" : "translate-x-0"
-          }`}
+        <motion.span
+          animate={{ x: checked ? 18 : 2 }}
+          transition={springBouncy}
+          className="absolute top-0.5 left-0 w-5.5 h-5.5 rounded-full bg-white shadow-elevated"
         />
       </span>
     </button>
@@ -145,29 +149,38 @@ export default function Settings({
 
   return (
     <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
-      <div className="pt-space-sm pb-space-lg motion-rise">
+      <motion.div
+        variants={fadeRise}
+        initial="hidden"
+        animate="visible"
+        transition={springSoft}
+        className="pt-space-sm pb-space-lg"
+      >
         <p className="font-label-sm text-label-sm text-outline tracking-widest uppercase">
           Preferences
         </p>
         <h2 className="mt-space-xs font-headline-sm text-headline-sm text-on-surface tracking-tight">
           Settings
         </h2>
-      </div>
+      </motion.div>
 
-      <section
-        className="flex flex-col motion-rise"
-        style={{ animationDelay: "80ms" }}
+      <motion.section
+        variants={fadeRise}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...springSoft, delay: 0.06 }}
+        className="flex flex-col gap-space-sm"
       >
-        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
+        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
           Profile
         </span>
 
         <form
           onSubmit={handleSaveProfile}
-          className="flex flex-col gap-space-lg pt-space-md"
+          className="flex flex-col gap-space-lg rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl p-space-md shadow-elevated"
         >
           <div className="flex items-center gap-space-md">
-            <div className="w-16 h-16 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center shrink-0">
+            <div className="w-16 h-16 rounded-full bg-surface-container-high overflow-hidden flex items-center justify-center shrink-0 ring-1 ring-white/10">
               {showPreview ? (
                 <img
                   src={previewUrl}
@@ -195,7 +208,7 @@ export default function Settings({
               onChange={(event) => setDisplayName(event.target.value)}
               maxLength={40}
               placeholder="Your name"
-              className="w-full h-12 bg-transparent border-b border-surface-container-highest text-body-md text-on-surface outline-none placeholder:text-outline focus:border-primary-container transition-colors"
+              className="w-full h-12 bg-transparent border-b border-white/12 text-body-md text-on-surface outline-none placeholder:text-outline focus:border-primary-container transition-colors"
             />
           </label>
 
@@ -211,7 +224,7 @@ export default function Settings({
                 setBrokenImage(false);
               }}
               placeholder="https://..."
-              className="w-full h-12 bg-transparent border-b border-surface-container-highest text-body-md text-on-surface outline-none placeholder:text-outline focus:border-primary-container transition-colors"
+              className="w-full h-12 bg-transparent border-b border-white/12 text-body-md text-on-surface outline-none placeholder:text-outline focus:border-primary-container transition-colors"
             />
           </label>
 
@@ -223,25 +236,26 @@ export default function Settings({
           <button
             type="submit"
             disabled={saving}
-            className="h-13 rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] disabled:opacity-50 transition-transform"
+            className="h-13 rounded-full bg-primary-container text-on-primary-fixed text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive shadow-elevated-primary disabled:opacity-50 disabled:shadow-none"
           >
             <IconCheck size={18} stroke={2} />
             {saving ? "Saving..." : "Save profile"}
           </button>
         </form>
-      </section>
+      </motion.section>
 
-      <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
-
-      <section
-        className="flex flex-col motion-rise"
-        style={{ animationDelay: "160ms" }}
+      <motion.section
+        variants={fadeRise}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...springSoft, delay: 0.12 }}
+        className="flex flex-col gap-space-sm pt-space-xl"
       >
-        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
+        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
           General
         </span>
 
-        <div className="flex flex-col divide-y divide-surface-container-highest/40 pt-space-sm">
+        <div className="flex flex-col divide-y divide-white/8 rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl px-space-md shadow-elevated">
           <button
             type="button"
             disabled={saving}
@@ -254,12 +268,10 @@ export default function Settings({
             className="w-full flex items-center justify-between gap-space-md py-space-md text-left motion-interactive disabled:opacity-50"
           >
             <div className="flex items-start gap-space-sm min-w-0">
-              <IconCalendarWeek
-                size={18}
-                className="text-outline mt-0.5 shrink-0"
-                stroke={1.8}
-              />
-              <div>
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.5rem] bg-primary-container/15 text-primary-container">
+                <IconCalendarWeek size={16} stroke={1.8} />
+              </span>
+              <div className="pt-0.5">
                 <p className="font-body-md text-body-md text-on-surface">
                   Week starts on
                 </p>
@@ -293,26 +305,29 @@ export default function Settings({
             description="Keep a personal cue to check in each day"
           />
         </div>
-      </section>
+      </motion.section>
 
-      <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
-
-      <section
-        className="flex flex-col gap-space-md motion-rise"
-        style={{ animationDelay: "240ms" }}
+      <motion.section
+        variants={fadeRise}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...springSoft, delay: 0.18 }}
+        className="flex flex-col gap-space-sm pt-space-xl"
       >
-        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
+        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
           Account
         </span>
-        <p className="text-body-md text-on-surface-variant">{profile.email}</p>
-        <button
-          type="button"
-          onClick={onSignOut}
-          className="h-13 rounded-full bg-surface-container-high text-on-surface text-label-md font-semibold motion-interactive active:scale-[0.98] transition-transform"
-        >
-          Sign out
-        </button>
-      </section>
+        <div className="flex flex-col gap-space-md rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl p-space-md shadow-elevated">
+          <p className="text-body-md text-on-surface-variant">{profile.email}</p>
+          <button
+            type="button"
+            onClick={onSignOut}
+            className="h-13 rounded-full bg-white/8 text-on-surface text-label-md font-semibold motion-interactive"
+          >
+            Sign out
+          </button>
+        </div>
+      </motion.section>
     </main>
   );
 }

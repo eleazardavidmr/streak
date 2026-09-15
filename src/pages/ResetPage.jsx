@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import ResetFlow from "../components/ResetFlow.jsx";
+import { fadeScale, springSoft } from "../lib/motion.js";
 import {
   calculateCurrentStreak,
   getCheckins,
@@ -38,17 +40,23 @@ export default function ResetPage({ onNavigate }) {
 
   if (loading) {
     return (
-      <main className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface motion-scale-in">
+      <motion.main
+        variants={fadeScale}
+        initial="hidden"
+        animate="visible"
+        transition={springSoft}
+        className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface"
+      >
         <span className="text-label-sm text-outline uppercase tracking-widest">
           Loading
         </span>
-      </main>
+      </motion.main>
     );
   }
 
   if (error) {
     return (
-      <main className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface motion-page">
+      <main className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface">
         <p className="text-body-md text-error">{error}</p>
       </main>
     );

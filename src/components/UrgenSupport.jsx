@@ -10,9 +10,9 @@ export default function UrgeSupport({ onNavigate }) {
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="flex min-h-16 w-full items-center gap-space-md rounded-xl bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive active:scale-[0.99] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
+        className="flex min-h-16 w-full items-center gap-space-md rounded-[1.1rem] bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container select-none"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-container-highest">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[0.85rem] bg-surface-container-highest">
           <IconBolt size={20} stroke={2} />
         </span>
         <span className="flex min-w-0 flex-col">

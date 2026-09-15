@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import StreakHero from "../components/StreakHero.jsx";
 import CheckinButton from "../components/CheckInButton.jsx";
 import UrgentSupport from "../components/UrgenSupport.jsx";
@@ -17,8 +18,9 @@ import {
   undoTodayCheckin,
 } from "../lib/checkins.js";
 import { getRelapses } from "../lib/relapses.js";
+import { fadeRise, fadeScale, springSoft } from "../lib/motion.js";
 
-export default function Dashboard({ profile, onNavigate }) {
+export default function Dashboard({ profile, onNavigate, onActivityChange }) {
   const [checkinDates, setCheckinDates] = useState([]);
   const [relapseDates, setRelapseDates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,6 +69,7 @@ export default function Dashboard({ profile, onNavigate }) {
         setCheckinDates((dates) => [...dates, getTodayDate()]);
         setCheckinCelebration((value) => value + 1);
       }
+      onActivityChange?.();
     } catch {
       setError("Unable to update today's check-in.");
     } finally {
@@ -84,6 +87,8 @@ export default function Dashboard({ profile, onNavigate }) {
     setRelapseDates((dates) =>
       dates.includes(today) ? dates : [...dates, today],
     );
+
+    onActivityChange?.();
   };
 
   const checkedIn = hasCheckedInToday(checkinDates);
@@ -99,16 +104,27 @@ export default function Dashboard({ profile, onNavigate }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest">
+      <motion.div
+        variants={fadeScale}
+        initial="hidden"
+        animate="visible"
+        transition={springSoft}
+        className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest"
+      >
         Loading
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container motion-page">
+    <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
       <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
-        <div className="motion-rise">
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={springSoft}
+        >
           <StreakHero
             streak={streak}
             bestStreak={bestStreak}
@@ -116,9 +132,15 @@ export default function Dashboard({ profile, onNavigate }) {
             showBestStreak={profile.showBestStreak}
             celebrationKey={checkinCelebration}
           />
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-space-sm rounded-xl bg-surface-container-low motion-stagger p-5">
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.06 }}
+          className="flex flex-col gap-space-sm rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl shadow-elevated p-5"
+        >
           <CheckinButton
             checkedIn={checkedIn}
             onToggle={handleToggleCheckin}
@@ -132,7 +154,7 @@ export default function Dashboard({ profile, onNavigate }) {
             onComplete={handleResetComplete}
             onNavigate={onNavigate}
           />
-        </div>
+        </motion.div>
 
         {error && (
           <p className="mt-space-md text-body-md text-error">{error}</p>
@@ -140,20 +162,30 @@ export default function Dashboard({ profile, onNavigate }) {
 
         <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-        <div className="motion-rise" style={{ animationDelay: "180ms" }}>
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.12 }}
+        >
           <ActivityHeatmap
             distribution={distribution}
             months={heatmapMonths}
             loggedDays={checkinDates.length}
             weekStartsOn={profile.weekStartsOn}
           />
-        </div>
+        </motion.div>
 
         <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
 
-        <div className="motion-rise" style={{ animationDelay: "260ms" }}>
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.18 }}
+        >
           <FocusPrinciples />
-        </div>
+        </motion.div>
       </main>
     </div>
   );

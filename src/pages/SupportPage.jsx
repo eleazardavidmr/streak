@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { IconArrowLeft, IconBolt } from "@tabler/icons-react";
+import { fadeRise, springSoft } from "../lib/motion.js";
 
 const TIMER_DURATION = 60;
 const TIMER_RADIUS = 78;
@@ -27,8 +29,8 @@ export default function SupportPage({ onNavigate }) {
   const strokeDashoffset = TIMER_CIRCUMFERENCE * (1 - progress);
 
   return (
-    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-safe bg-surface motion-page">
-      <div className="max-w-md mx-auto w-full motion-panel">
+    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-safe bg-surface">
+      <div className="max-w-md mx-auto w-full">
         <button
           type="button"
           onClick={() => onNavigate?.("/")}
@@ -38,11 +40,23 @@ export default function SupportPage({ onNavigate }) {
           <span className="font-label-md text-label-md">Back to streak</span>
         </button>
 
-        <div className="mt-space-xl flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-container text-on-primary-fixed">
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={springSoft}
+          className="mt-space-xl flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-container text-on-primary-fixed"
+        >
           <IconBolt size={25} stroke={2} />
-        </div>
+        </motion.div>
 
-        <div className="mt-space-lg motion-stagger">
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.06 }}
+          className="mt-space-lg"
+        >
           <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-wider">
             Grounding protocol
           </span>
@@ -53,9 +67,15 @@ export default function SupportPage({ onNavigate }) {
             Urges peak within 15 minutes and dissipate like a wave. Breathe out
             slowly for 4 seconds, ground your feet against the floor.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="mt-space-xl flex flex-col items-center border-t border-surface-container-highest pt-space-xl motion-rise">
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.12 }}
+          className="mt-space-xl flex flex-col items-center border-t border-surface-container-highest pt-space-xl"
+        >
           <div
             className="relative flex h-44 w-44 items-center justify-center"
             role="timer"
@@ -98,7 +118,7 @@ export default function SupportPage({ onNavigate }) {
           <span className="mt-space-lg font-label-sm text-label-sm text-outline uppercase tracking-wider">
             {secondsLeft > 0 ? "60-second reset engaged" : "Reset complete"}
           </span>
-        </div>
+        </motion.div>
       </div>
     </main>
   );

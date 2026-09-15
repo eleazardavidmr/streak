@@ -1,4 +1,6 @@
+import { motion } from "framer-motion";
 import { IconBolt, IconCircleCheck, IconX } from "@tabler/icons-react";
+import { fadeRise, springSoft } from "../lib/motion.js";
 
 export default function ActionConfirmation({
   action,
@@ -9,7 +11,13 @@ export default function ActionConfirmation({
   const title = action?.title ?? "Reset action";
 
   return (
-    <div className="flex flex-col w-full motion-rise">
+    <motion.div
+      variants={fadeRise}
+      initial="hidden"
+      animate="visible"
+      transition={springSoft}
+      className="flex flex-col w-full"
+    >
       <div className="flex items-center justify-between py-space-xs mb-space-md">
         <button
           type="button"
@@ -88,7 +96,7 @@ export default function ActionConfirmation({
         <button
           type="button"
           onClick={onDone}
-          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive active:scale-[0.98] transition-transform"
+          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive shadow-elevated-primary"
         >
           <IconCircleCheck size={20} stroke={2} />
           Mark as done
@@ -101,6 +109,6 @@ export default function ActionConfirmation({
           Choose different action
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,5 +1,7 @@
+import { motion } from "framer-motion";
 import { IconArrowLeft, IconArrowRight, IconRefresh } from "@tabler/icons-react";
 import { getTodayDate } from "../lib/checkins.js";
+import { fadeRise, springSoft } from "../lib/motion.js";
 
 function addDays(dateString, amount) {
   const date = new Date(`${dateString}T00:00:00`);
@@ -27,7 +29,13 @@ export default function ReportSetback({
   const filledCount = maintained.filter((day) => day.filled).length;
 
   return (
-    <div className="flex flex-col w-full">
+    <motion.div
+      variants={fadeRise}
+      initial="hidden"
+      animate="visible"
+      transition={springSoft}
+      className="flex flex-col w-full"
+    >
       <div className="flex items-center justify-between py-space-sm mb-space-md">
         <button
           type="button"
@@ -116,7 +124,7 @@ export default function ReportSetback({
         <button
           type="button"
           onClick={onContinue}
-          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs active:scale-[0.98] transition-transform"
+          className="w-full h-13 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive shadow-elevated-primary"
         >
           <span>Choose next action</span>
           <IconArrowRight size={18} stroke={2} />
@@ -129,6 +137,6 @@ export default function ReportSetback({
           Return to dashboard
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

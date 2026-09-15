@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { IconCheck, IconRosetteDiscountCheck } from "@tabler/icons-react";
 import ActionConfirmationModal from "./ActionConfirmationModal.jsx";
+import { springBouncy } from "../lib/motion.js";
 
 export default function CheckinButton({
   checkedIn,
@@ -16,19 +18,32 @@ export default function CheckinButton({
 
   return (
     <>
-      <button
+      <motion.button
         type="button"
         onClick={() => setConfirming(true)}
         disabled={disabled}
+        whileTap={{ scale: 0.97 }}
+        transition={springBouncy}
         aria-label={checkedIn ? "Undo today's check-in" : "Mark today as clean"}
-        className={`w-full min-h-16 rounded-xl px-space-md py-space-sm font-label-md text-label-md font-semibold flex items-center gap-space-md text-left motion-interactive active:scale-[0.99] transition-transform duration-150 select-none disabled:opacity-50 ${
+        className={`w-full min-h-16 rounded-[1.1rem] px-space-md py-space-sm font-label-md text-label-md font-semibold flex items-center gap-space-md text-left select-none disabled:opacity-50 disabled:shadow-none ${
           checkedIn
             ? "bg-surface-container-high text-on-surface-variant"
-            : "bg-primary-container text-on-primary-fixed"
+            : "bg-primary-container text-on-primary-fixed shadow-elevated-primary"
         }`}
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-black/10">
-          <CheckinIcon size={19} stroke={checkedIn ? 2 : 2.5} />
+        <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-black/10">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={checkedIn ? "done" : "pending"}
+              initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+              transition={springBouncy}
+              className="flex items-center justify-center"
+            >
+              <CheckinIcon size={19} stroke={checkedIn ? 2 : 2.5} />
+            </motion.span>
+          </AnimatePresence>
         </span>
         <span className="flex min-w-0 flex-col">
           <span className="font-label-md text-label-md">{title}</span>
@@ -36,7 +51,7 @@ export default function CheckinButton({
             {description}
           </span>
         </span>
-      </button>
+      </motion.button>
       <ActionConfirmationModal
         open={confirming}
         title={checkedIn ? "Undo today's check-in?" : "Mark today as clean?"}

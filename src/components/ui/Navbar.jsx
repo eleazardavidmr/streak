@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { IconLogout, IconUser } from "@tabler/icons-react";
 import { defaultProfile } from "../../lib/profile.js";
+import { slideDown, springSnappy } from "../../lib/motion.js";
 import BrandMark from "./BrandMark.jsx";
+import NotificationBell from "./NotificationBell.jsx";
 
 export default function Navbar({
   profile = defaultProfile,
   onSignOut,
   onNavigate,
+  notifications,
+  onMarkNotificationRead,
+  onMarkAllNotificationsRead,
 }) {
   const { displayName, avatarUrl, email } = profile;
   const label = displayName || email;
@@ -21,7 +27,13 @@ export default function Navbar({
   const showAvatar = avatarUrl && !brokenImage;
 
   return (
-    <header className="fixed top-0 w-full z-50 pt-safe bg-surface motion-slide-down">
+    <motion.header
+      variants={slideDown}
+      initial="hidden"
+      animate="visible"
+      transition={springSnappy}
+      className="fixed top-0 w-full z-50 pt-safe material-chrome border-b border-white/8"
+    >
       <div className="h-16 px-margin flex items-center justify-between">
         <button
           type="button"
@@ -36,6 +48,11 @@ export default function Navbar({
           <span className="hidden sm:block text-label-sm text-outline max-w-40 truncate">
             {label}
           </span>
+          <NotificationBell
+            notifications={notifications}
+            onMarkRead={onMarkNotificationRead}
+            onMarkAllRead={onMarkAllNotificationsRead}
+          />
           <button
             type="button"
             onClick={() => onNavigate?.("/settings")}
@@ -63,6 +80,6 @@ export default function Navbar({
           </button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   IconBarbell,
   IconChevronRight,
@@ -6,6 +7,7 @@ import {
   IconSparkles,
   IconWalk,
 } from "@tabler/icons-react";
+import { fadeRise, springSoft, staggerParent, staggerTransition } from "../lib/motion.js";
 
 const resetActions = [
   {
@@ -42,7 +44,13 @@ const resetActions = [
 
 export default function ActionSelection({ onSelect, onSkip, onBack }) {
   return (
-    <div className="flex flex-col w-full">
+    <motion.div
+      variants={fadeRise}
+      initial="hidden"
+      animate="visible"
+      transition={springSoft}
+      className="flex flex-col w-full"
+    >
       <div className="flex items-center justify-between pb-space-lg">
         <button
           type="button"
@@ -66,13 +74,22 @@ export default function ActionSelection({ onSelect, onSkip, onBack }) {
         </p>
       </div>
 
-      <div className="flex flex-col w-full divide-y divide-outline-variant/30 motion-stagger">
+      <motion.div
+        variants={staggerParent}
+        initial="hidden"
+        animate="visible"
+        transition={staggerTransition(0.05)}
+        className="flex flex-col w-full divide-y divide-white/8 rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl px-space-md"
+      >
         {resetActions.map((action) => (
-          <button
+          <motion.button
             key={action.id}
+            variants={fadeRise}
+            transition={springSoft}
             type="button"
             onClick={() => onSelect(action)}
-            className="group flex items-center justify-between w-full py-space-md text-left motion-interactive transition-colors hover:bg-surface-container-low"
+            whileTap={{ scale: 0.985 }}
+            className="group flex items-center justify-between w-full py-space-md text-left transition-colors"
           >
             <div className="flex items-center gap-space-md min-w-0 pr-space-sm">
               <div className="flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-secondary shrink-0 group-hover:bg-secondary-container group-hover:text-primary-container transition-colors">
@@ -92,9 +109,9 @@ export default function ActionSelection({ onSelect, onSkip, onBack }) {
               stroke={1.6}
               className="text-outline shrink-0 group-hover:text-primary-container transition-colors"
             />
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       <div className="flex items-center justify-center pt-space-xl pb-space-md">
         <button
@@ -105,6 +122,6 @@ export default function ActionSelection({ onSelect, onSkip, onBack }) {
           Skip for now
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

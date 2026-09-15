@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { fadeRise, springSoft, staggerParent, staggerTransition } from "../lib/motion.js";
+
 const defaultPrinciples = [
   {
     number: "01",
@@ -17,9 +20,15 @@ export default function FocusPrinciples({ principles = defaultPrinciples }) {
       <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase">
         Focus principles
       </span>
-      <div className="flex flex-col gap-space-sm motion-stagger">
+      <motion.div
+        variants={staggerParent}
+        initial="hidden"
+        animate="visible"
+        transition={staggerTransition(0.08)}
+        className="flex flex-col gap-space-sm"
+      >
         {principles.map((p, i) => (
-          <div key={p.number}>
+          <motion.div key={p.number} variants={fadeRise} transition={springSoft}>
             <div className="flex items-start gap-space-sm">
               <span className="font-label-sm text-label-sm text-primary-container pt-0.5">
                 {p.number}
@@ -36,9 +45,9 @@ export default function FocusPrinciples({ principles = defaultPrinciples }) {
             {i < principles.length - 1 && (
               <div className="w-full h-px bg-surface-container-highest opacity-40 my-space-xs" />
             )}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

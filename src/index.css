@@ -122,6 +122,30 @@
   }
 }
 
+@utility material-chrome {
+  background-color: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+@utility overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+}
+
+@utility shadow-elevated {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+@utility shadow-elevated-primary {
+  box-shadow:
+    0 1px 2px rgba(190, 242, 100, 0.16),
+    0 14px 32px rgba(190, 242, 100, 0.16);
+}
+
 @utility pt-safe {
   padding-top: env(safe-area-inset-top, 0px);
 }
@@ -166,87 +190,6 @@ body {
   overscroll-behavior: none;
 }
 
-@keyframes motion-page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes motion-rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes motion-slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes motion-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes motion-scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes motion-checkin-odometer {
-  0% {
-    opacity: 0;
-    transform: translateY(110%) rotateX(-90deg);
-  }
-
-  58% {
-    opacity: 1;
-    transform: translateY(-10%) rotateX(8deg);
-  }
-
-  78% {
-    transform: translateY(3%) rotateX(-2deg);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg);
-  }
-}
-
 .streak-number-window {
   display: inline-flex;
   height: 42px;
@@ -256,85 +199,16 @@ body {
   vertical-align: bottom;
 }
 
-.motion-checkin-odometer {
-  display: inline-block;
-  transform-origin: center bottom;
-  backface-visibility: hidden;
-  animation: motion-checkin-odometer 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-page {
-  animation: motion-page-enter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-rise {
-  animation: motion-rise-in 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-slide-down {
-  animation: motion-slide-down 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-slide-up {
-  animation: motion-slide-up 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-scale-in {
-  animation: motion-scale-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-stagger > * {
-  animation: motion-rise-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-stagger > *:nth-child(2) {
-  animation-delay: 70ms;
-}
-.motion-stagger > *:nth-child(3) {
-  animation-delay: 140ms;
-}
-.motion-stagger > *:nth-child(4) {
-  animation-delay: 210ms;
-}
-.motion-stagger > *:nth-child(5) {
-  animation-delay: 280ms;
-}
-.motion-stagger > *:nth-child(6) {
-  animation-delay: 350ms;
-}
-
-.motion-grid > * {
-  animation: motion-scale-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.motion-grid > *:nth-child(3n) {
-  animation-delay: 80ms;
-}
-.motion-grid > *:nth-child(3n + 1) {
-  animation-delay: 140ms;
-}
-.motion-grid > *:nth-child(3n + 2) {
-  animation-delay: 210ms;
-}
-
 .motion-interactive {
   transition:
-    transform 180ms ease,
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 180ms ease,
     background-color 180ms ease;
 }
 
 .motion-interactive:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.motion-panel {
-  animation: motion-scale-in 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  transform-origin: center bottom;
-}
-
-.motion-overlay {
-  animation: motion-page-enter 280ms ease-out both;
+  transform: translateY(0) scale(0.97);
+  transition-duration: 90ms;
 }
 
 @media (prefers-reduced-motion: reduce) {

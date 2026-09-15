@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { IconRefresh } from "@tabler/icons-react";
 import ActionConfirmationModal from "./ActionConfirmationModal.jsx";
 import ReportSetback from "./ReportSetback.jsx";
@@ -7,6 +8,7 @@ import ActionConfirmation from "./ActionConfirmation.jsx";
 import ReflectionForm from "./ReflectionForm.jsx";
 import { reportRelapse } from "../lib/relapses.js";
 import { undoTodayCheckin } from "../lib/checkins.js";
+import { springSoft } from "../lib/motion.js";
 
 export default function ResetFlow({
   streak,
@@ -56,55 +58,57 @@ export default function ResetFlow({
   };
 
   const flowContent = (
-    <div className="max-w-md mx-auto py-space-md motion-panel">
-      {step === "entry" && (
-        <div className="motion-rise">
-          <ReportSetback
-            streak={streak}
-            checkinDates={checkinDates}
-            onContinue={() => setStep("action")}
-            onCancel={close}
-          />
-        </div>
-      )}
+    <div className="max-w-md mx-auto py-space-md">
+      <AnimatePresence mode="wait">
+        {step === "entry" && (
+          <motion.div key="entry" exit={{ opacity: 0, x: -20 }} transition={springSoft}>
+            <ReportSetback
+              streak={streak}
+              checkinDates={checkinDates}
+              onContinue={() => setStep("action")}
+              onCancel={close}
+            />
+          </motion.div>
+        )}
 
-      {step === "action" && (
-        <div className="motion-rise">
-          <ActionSelection
-            onBack={() => setStep("entry")}
-            onSelect={(nextAction) => {
-              setAction(nextAction);
-              setStep("confirm");
-            }}
-            onSkip={() => {
-              setAction(null);
-              setStep("reflect");
-            }}
-          />
-        </div>
-      )}
+        {step === "action" && (
+          <motion.div key="action" exit={{ opacity: 0, x: -20 }} transition={springSoft}>
+            <ActionSelection
+              onBack={() => setStep("entry")}
+              onSelect={(nextAction) => {
+                setAction(nextAction);
+                setStep("confirm");
+              }}
+              onSkip={() => {
+                setAction(null);
+                setStep("reflect");
+              }}
+            />
+          </motion.div>
+        )}
 
-      {step === "confirm" && (
-        <div className="motion-rise">
-          <ActionConfirmation
-            action={action}
-            onDone={() => setStep("reflect")}
-            onChangeAction={() => setStep("action")}
-            onClose={close}
-          />
-        </div>
-      )}
+        {step === "confirm" && (
+          <motion.div key="confirm" exit={{ opacity: 0, x: -20 }} transition={springSoft}>
+            <ActionConfirmation
+              action={action}
+              onDone={() => setStep("reflect")}
+              onChangeAction={() => setStep("action")}
+              onClose={close}
+            />
+          </motion.div>
+        )}
 
-      {step === "reflect" && (
-        <div className="motion-rise">
-          <ReflectionForm
-            saving={saving}
-            onBack={() => setStep(action ? "confirm" : "action")}
-            onSave={finish}
-            onSkip={() => finish()}
-          />
-        </div>
-      )}
+        {step === "reflect" && (
+          <motion.div key="reflect" exit={{ opacity: 0, x: -20 }} transition={springSoft}>
+            <ReflectionForm
+              saving={saving}
+              onBack={() => setStep(action ? "confirm" : "action")}
+              onSave={finish}
+              onSkip={() => finish()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {error && <p className="mt-space-md text-body-md text-error">{error}</p>}
     </div>
@@ -112,7 +116,7 @@ export default function ResetFlow({
 
   if (page) {
     return (
-      <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-safe bg-surface motion-page">
+      <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-safe bg-surface">
         {flowContent}
       </main>
     );
@@ -124,9 +128,9 @@ export default function ResetFlow({
         type="button"
         onClick={() => setConfirming(true)}
         aria-label="Open reset support"
-        className="flex min-h-16 w-full items-center gap-space-md rounded-xl bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive active:scale-[0.99] hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container transition duration-150 select-none"
+        className="flex min-h-16 w-full items-center gap-space-md rounded-[1.1rem] bg-surface-container-high px-space-md py-space-sm text-left text-on-surface font-label-md text-label-md font-semibold motion-interactive hover:bg-surface-variant focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container select-none"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-container-highest">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[0.85rem] bg-surface-container-highest">
           <IconRefresh size={18} stroke={2.25} />
         </span>
         <span className="flex min-w-0 flex-col">

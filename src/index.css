@@ -156,10 +156,18 @@
 
 @utility pt-nav {
   padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+
+  @media (min-width: 768px) {
+    padding-top: 2.5rem;
+  }
 }
 
 @utility pb-nav {
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
+
+  @media (min-width: 768px) {
+    padding-bottom: 2.5rem;
+  }
 }
 
 ::-webkit-scrollbar {

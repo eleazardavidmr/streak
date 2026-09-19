@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { IconLogout, IconUser } from "@tabler/icons-react";
+import { IconLogout } from "@tabler/icons-react";
 import { defaultProfile } from "../../lib/profile.js";
 import { slideDown, springSnappy } from "../../lib/motion.js";
 import BrandMark from "./BrandMark.jsx";
 import NotificationBell from "./NotificationBell.jsx";
+import Avatar from "./Avatar.jsx";
 
 export default function Navbar({
   profile = defaultProfile,
@@ -16,15 +16,6 @@ export default function Navbar({
 }) {
   const { displayName, avatarUrl, email } = profile;
   const label = displayName || email;
-  const [brokenImage, setBrokenImage] = useState(false);
-  const [lastAvatarUrl, setLastAvatarUrl] = useState(avatarUrl);
-
-  if (avatarUrl !== lastAvatarUrl) {
-    setLastAvatarUrl(avatarUrl);
-    setBrokenImage(false);
-  }
-
-  const showAvatar = avatarUrl && !brokenImage;
 
   return (
     <motion.header
@@ -32,7 +23,7 @@ export default function Navbar({
       initial="hidden"
       animate="visible"
       transition={springSnappy}
-      className="fixed top-0 w-full z-50 pt-safe material-chrome border-b border-white/8"
+      className="fixed top-0 w-full z-50 pt-safe material-chrome border-b border-white/8 md:hidden"
     >
       <div className="h-16 px-margin flex items-center justify-between">
         <button
@@ -57,18 +48,9 @@ export default function Navbar({
             type="button"
             onClick={() => onNavigate?.("/settings")}
             aria-label="Open settings"
-            className="w-8 h-8 rounded-full bg-primary flex items-center justify-center overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container"
+            className="rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-container"
           >
-            {showAvatar ? (
-              <img
-                src={avatarUrl}
-                alt=""
-                className="w-full h-full object-cover"
-                onError={() => setBrokenImage(true)}
-              />
-            ) : (
-              <IconUser size={18} className="text-on-primary" stroke={2} />
-            )}
+            <Avatar avatarUrl={avatarUrl} />
           </button>
           <button
             type="button"

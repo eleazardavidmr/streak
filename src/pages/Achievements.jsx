@@ -64,7 +64,7 @@ export default function Achievements() {
     : 0;
 
   return (
-    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
+    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface md:mx-auto md:max-w-2xl">
       <motion.div
         variants={fadeRise}
         initial="hidden"

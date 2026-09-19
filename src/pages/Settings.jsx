@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { saveProfile } from "../lib/profile.js";
 import { fadeRise, springBouncy, springSoft } from "../lib/motion.js";
+import HabitManager from "../components/HabitManager.jsx";
 
 function isValidHttpUrl(value) {
   if (!value.trim()) {
@@ -187,7 +188,7 @@ export default function Settings({
   const showPreview = previewUrl && isValidHttpUrl(previewUrl) && !brokenImage;
 
   return (
-    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
+    <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface md:mx-auto md:max-w-2xl">
       <motion.div
         variants={fadeRise}
         initial="hidden"
@@ -422,6 +423,19 @@ export default function Settings({
         initial="hidden"
         animate="visible"
         transition={{ ...springSoft, delay: 0.24 }}
+        className="flex flex-col gap-space-sm pt-space-xl"
+      >
+        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
+          Manage habits
+        </span>
+        <HabitManager />
+      </motion.section>
+
+      <motion.section
+        variants={fadeRise}
+        initial="hidden"
+        animate="visible"
+        transition={{ ...springSoft, delay: 0.3 }}
         className="flex flex-col gap-space-sm pt-space-xl"
       >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">

@@ -6,6 +6,7 @@ import UrgentSupport from "../components/UrgenSupport.jsx";
 import ResetFlow from "../components/ResetFlow.jsx";
 import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
 import RunningStreak from "../components/RunningStreak.jsx";
+import HabitsSection from "../components/HabitsSection.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import {
   buildHeatmapDistribution,
@@ -119,7 +120,7 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
 
   return (
     <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
-      <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface">
+      <main className="flex-1 flex flex-col relative w-full px-margin pt-nav pb-nav bg-surface md:mx-auto md:max-w-2xl">
         <motion.div
           variants={fadeRise}
           initial="hidden"
@@ -195,6 +196,17 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
           initial="hidden"
           animate="visible"
           transition={{ ...springSoft, delay: 0.24 }}
+        >
+          <HabitsSection />
+        </motion.div>
+
+        <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
+
+        <motion.div
+          variants={fadeRise}
+          initial="hidden"
+          animate="visible"
+          transition={{ ...springSoft, delay: 0.3 }}
         >
           <FocusPrinciples />
         </motion.div>

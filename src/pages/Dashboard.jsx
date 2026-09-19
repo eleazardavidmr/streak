@@ -8,6 +8,7 @@ import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
 import RunningStreak from "../components/RunningStreak.jsx";
 import HabitsSection from "../components/HabitsSection.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
+import LoadingView from "../components/ui/LoadingView.jsx";
 import {
   buildHeatmapDistribution,
   buildHeatmapMonths,
@@ -20,7 +21,7 @@ import {
   undoTodayCheckin,
 } from "../lib/checkins.js";
 import { getRelapses } from "../lib/relapses.js";
-import { fadeRise, fadeScale, springSoft } from "../lib/motion.js";
+import { fadeRise, springSoft } from "../lib/motion.js";
 
 export default function Dashboard({ profile, onNavigate, onActivityChange }) {
   const [checkinDates, setCheckinDates] = useState([]);
@@ -105,17 +106,7 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
   const heatmapMonths = buildHeatmapMonths(16, profile.weekStartsOn);
 
   if (loading) {
-    return (
-      <motion.div
-        variants={fadeScale}
-        initial="hidden"
-        animate="visible"
-        transition={springSoft}
-        className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest"
-      >
-        Loading
-      </motion.div>
-    );
+    return <LoadingView label="Loading your streak" />;
   }
 
   return (

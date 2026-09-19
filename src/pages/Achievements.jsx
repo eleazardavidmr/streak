@@ -7,9 +7,9 @@ import {
   getCheckins,
 } from "../lib/checkins.js";
 import { milestones } from "../lib/achievements.js";
+import LoadingView from "../components/ui/LoadingView.jsx";
 import {
   fadeRise,
-  fadeScale,
   springSoft,
   staggerParent,
   staggerTransition,
@@ -46,17 +46,7 @@ export default function Achievements() {
   }, []);
 
   if (!stats && !error) {
-    return (
-      <motion.div
-        variants={fadeScale}
-        initial="hidden"
-        animate="visible"
-        transition={springSoft}
-        className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest"
-      >
-        Loading
-      </motion.div>
-    );
+    return <LoadingView label="Loading your achievements" />;
   }
 
   const unlockedCount = stats

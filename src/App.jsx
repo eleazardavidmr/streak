@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Dashboard from "./pages/Dashboard.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import Achievements from "./pages/Achievements.jsx";
@@ -7,9 +6,9 @@ import Settings from "./pages/Settings.jsx";
 import ResetPage from "./pages/ResetPage.jsx";
 import SupportPage from "./pages/SupportPage.jsx";
 import Layout from "./layouts/Layout.jsx";
+import LoadingView from "./components/ui/LoadingView.jsx";
 import { supabase } from "./lib/supabase.js";
 import { defaultProfile, loadProfile } from "./lib/profile.js";
-import { fadeScale, springSoft } from "./lib/motion.js";
 import {
   getNotifications,
   markAllNotificationsRead,
@@ -161,17 +160,7 @@ function App() {
   };
 
   if (loading) {
-    return (
-      <motion.div
-        variants={fadeScale}
-        initial="hidden"
-        animate="visible"
-        transition={springSoft}
-        className="min-h-screen bg-surface flex items-center justify-center text-label-sm text-outline uppercase tracking-widest"
-      >
-        Loading
-      </motion.div>
-    );
+    return <LoadingView />;
   }
 
   if (!session) {

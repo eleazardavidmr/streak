@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import ResetFlow from "../components/ResetFlow.jsx";
-import { fadeScale, springSoft } from "../lib/motion.js";
+import LoadingView from "../components/ui/LoadingView.jsx";
 import {
   calculateCurrentStreak,
   getCheckins,
@@ -40,17 +39,10 @@ export default function ResetPage({ onNavigate }) {
 
   if (loading) {
     return (
-      <motion.main
-        variants={fadeScale}
-        initial="hidden"
-        animate="visible"
-        transition={springSoft}
-        className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface"
-      >
-        <span className="text-label-sm text-outline uppercase tracking-widest">
-          Loading
-        </span>
-      </motion.main>
+      <LoadingView
+        label="Preparing your reset"
+        className="flex-1 px-margin pt-nav pb-safe"
+      />
     );
   }
 

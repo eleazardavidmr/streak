@@ -27,7 +27,7 @@ function normalizeDates(checkinDates) {
   );
 }
 
-export async function getCheckins(habit = "abstinence") {
+export async function getCheckins(habit) {
   const { data, error } = await supabase
     .from("checkins")
     .select("checkin_date")
@@ -45,7 +45,7 @@ export function hasCheckedInToday(checkinDates) {
   return normalizeDates(checkinDates).has(toDateString());
 }
 
-export async function markTodayClean(habit = "abstinence") {
+export async function markTodayClean(habit) {
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError) {
@@ -63,7 +63,7 @@ export async function markTodayClean(habit = "abstinence") {
   }
 }
 
-export async function undoTodayCheckin(habit = "abstinence") {
+export async function undoTodayCheckin(habit) {
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
   if (userError) {
@@ -157,23 +157,23 @@ export function buildHeatmapDistribution(
 }
 
 export function buildHeatmapMonths(weeks = 16, weekStartsOn = "monday") {
-  const { firstDate, totalDays } = getHeatmapRange(weeks, weekStartsOn);
-  const months = [];
+  const { firstDate } = getHeatmapRange(weeks, weekStartsOn);
   let lastMonth = null;
 
-  for (let index = 0; index < totalDays; index += 1) {
-    const date = addDays(firstDate, index);
+  // One entry per week-column, so it can be grid-positioned to line up
+  // exactly with the day-cell columns below it — null everywhere except
+  // the column where a new month actually starts.
+  return Array.from({ length: weeks }, (_, week) => {
+    const date = addDays(firstDate, week * 7);
     const month = date.slice(0, 7);
 
-    if (month !== lastMonth) {
-      lastMonth = month;
-      months.push(
-        new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
-          month: "short",
-        }),
-      );
+    if (month === lastMonth) {
+      return null;
     }
-  }
 
-  return months;
+    lastMonth = month;
+    return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
+      month: "short",
+    });
+  });
 }

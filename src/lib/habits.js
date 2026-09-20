@@ -7,8 +7,23 @@ export async function getHabits() {
     .from("habits")
     .select("id, title, icon_name, accent, sort_order, created_at")
     .is("archived_at", null)
+    .eq("is_default", false)
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: true });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getDefaultHabit() {
+  const { data, error } = await supabase
+    .from("habits")
+    .select("id, title, icon_name, accent, created_at")
+    .eq("is_default", true)
+    .single();
 
   if (error) {
     throw error;

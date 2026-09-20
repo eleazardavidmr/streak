@@ -4,7 +4,6 @@ import {
   IconBell,
   IconCalendarWeek,
   IconCheck,
-  IconFlag2,
   IconTrophy,
   IconUser,
 } from "@tabler/icons-react";
@@ -78,12 +77,6 @@ export default function Settings({
 }) {
   const [displayName, setDisplayName] = useState(profile.displayName);
   const [avatarUrl, setAvatarUrl] = useState(profile.avatarUrl);
-  const [runningGoalDate, setRunningGoalDate] = useState(
-    profile.runningGoalDate,
-  );
-  const [runningGoalLabel, setRunningGoalLabel] = useState(
-    profile.runningGoalLabel,
-  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -92,15 +85,11 @@ export default function Settings({
 
   if (
     profile.displayName !== lastProfile.displayName ||
-    profile.avatarUrl !== lastProfile.avatarUrl ||
-    profile.runningGoalDate !== lastProfile.runningGoalDate ||
-    profile.runningGoalLabel !== lastProfile.runningGoalLabel
+    profile.avatarUrl !== lastProfile.avatarUrl
   ) {
     setLastProfile(profile);
     setDisplayName(profile.displayName);
     setAvatarUrl(profile.avatarUrl);
-    setRunningGoalDate(profile.runningGoalDate);
-    setRunningGoalLabel(profile.runningGoalLabel);
     setBrokenImage(false);
   }
 
@@ -139,34 +128,6 @@ export default function Settings({
         avatarUrl: nextAvatar,
       });
       setNotice("Profile saved.");
-    } catch {
-      // Error is already surfaced.
-    }
-  };
-
-  const handleSaveGoal = async (event) => {
-    event.preventDefault();
-    setNotice("");
-
-    try {
-      await persist({
-        ...profile,
-        runningGoalDate: runningGoalDate || "",
-        runningGoalLabel: runningGoalLabel.trim(),
-      });
-      setNotice("Running goal saved.");
-    } catch {
-      // Error is already surfaced.
-    }
-  };
-
-  const handleClearGoal = async () => {
-    setNotice("");
-    setRunningGoalDate("");
-    setRunningGoalLabel("");
-
-    try {
-      await persist({ ...profile, runningGoalDate: "", runningGoalLabel: "" });
     } catch {
       // Error is already surfaced.
     }
@@ -355,77 +316,6 @@ export default function Settings({
         className="flex flex-col gap-space-sm pt-space-xl"
       >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
-          Running goal
-        </span>
-
-        <form
-          onSubmit={handleSaveGoal}
-          className="flex flex-col gap-space-lg rounded-[1.35rem] border border-white/8 bg-surface-container-low/70 backdrop-blur-xl p-space-md shadow-elevated"
-        >
-          <div className="flex items-center gap-space-sm">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[0.5rem] bg-secondary-container/40 text-secondary">
-              <IconFlag2 size={16} stroke={1.8} />
-            </span>
-            <p className="text-body-md text-on-surface-variant">
-              Set a target date to see a countdown on your running card.
-            </p>
-          </div>
-
-          <label className="flex flex-col gap-space-xs">
-            <span className="font-label-sm text-label-sm text-outline uppercase tracking-widest">
-              Goal date
-            </span>
-            <input
-              type="date"
-              value={runningGoalDate ?? ""}
-              onChange={(event) => setRunningGoalDate(event.target.value)}
-              className="w-full h-12 bg-transparent border-b border-white/12 text-body-md text-on-surface outline-none focus:border-primary-container transition-colors"
-            />
-          </label>
-
-          <label className="flex flex-col gap-space-xs">
-            <span className="font-label-sm text-label-sm text-outline uppercase tracking-widest">
-              Goal name
-            </span>
-            <input
-              type="text"
-              value={runningGoalLabel}
-              onChange={(event) => setRunningGoalLabel(event.target.value)}
-              maxLength={60}
-              placeholder="First 5K"
-              className="w-full h-12 bg-transparent border-b border-white/12 text-body-md text-on-surface outline-none placeholder:text-outline focus:border-primary-container transition-colors"
-            />
-          </label>
-
-          <div className="grid grid-cols-2 gap-space-sm">
-            <button
-              type="button"
-              onClick={handleClearGoal}
-              disabled={saving || !profile.runningGoalDate}
-              className="h-13 rounded-full bg-white/8 text-on-surface text-label-md font-semibold motion-interactive disabled:opacity-40"
-            >
-              Clear
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="h-13 rounded-full bg-secondary-container text-on-secondary-container text-label-md font-semibold flex items-center justify-center gap-space-xs motion-interactive shadow-elevated disabled:opacity-50"
-            >
-              <IconCheck size={18} stroke={2} />
-              Save goal
-            </button>
-          </div>
-        </form>
-      </motion.section>
-
-      <motion.section
-        variants={fadeRise}
-        initial="hidden"
-        animate="visible"
-        transition={{ ...springSoft, delay: 0.24 }}
-        className="flex flex-col gap-space-sm pt-space-xl"
-      >
-        <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">
           Manage habits
         </span>
         <HabitManager />
@@ -435,7 +325,7 @@ export default function Settings({
         variants={fadeRise}
         initial="hidden"
         animate="visible"
-        transition={{ ...springSoft, delay: 0.3 }}
+        transition={{ ...springSoft, delay: 0.24 }}
         className="flex flex-col gap-space-sm pt-space-xl"
       >
         <span className="font-label-sm text-label-sm text-outline tracking-wider uppercase px-space-xs">

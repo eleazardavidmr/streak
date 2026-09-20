@@ -6,8 +6,10 @@ import {
   getCheckins,
   hasCheckedInToday,
 } from "../lib/checkins.js";
+import { getDefaultHabit } from "../lib/habits.js";
 
 export default function ResetPage({ onNavigate }) {
+  const [habitId, setHabitId] = useState(null);
   const [checkinDates, setCheckinDates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -15,12 +17,15 @@ export default function ResetPage({ onNavigate }) {
   useEffect(() => {
     let mounted = true;
 
-    getCheckins()
-      .then((dates) => {
-        if (mounted) {
-          setCheckinDates(dates);
-        }
-      })
+    getDefaultHabit()
+      .then((defaultHabit) =>
+        getCheckins(defaultHabit.id).then((dates) => {
+          if (mounted) {
+            setHabitId(defaultHabit.id);
+            setCheckinDates(dates);
+          }
+        }),
+      )
       .catch(() => {
         if (mounted) {
           setError("Unable to load your check-ins.");
@@ -46,7 +51,7 @@ export default function ResetPage({ onNavigate }) {
     );
   }
 
-  if (error) {
+  if (error || !habitId) {
     return (
       <main className="flex-1 flex items-center justify-center px-margin pt-nav pb-safe bg-surface">
         <p className="text-body-md text-error">{error}</p>
@@ -57,6 +62,7 @@ export default function ResetPage({ onNavigate }) {
   return (
     <ResetFlow
       page
+      habitId={habitId}
       streak={calculateCurrentStreak(checkinDates)}
       checkinDates={checkinDates}
       hasCheckedInToday={hasCheckedInToday(checkinDates)}

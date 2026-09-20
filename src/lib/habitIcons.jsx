@@ -2,6 +2,7 @@ import {
   IconBarbell,
   IconBook2,
   IconDroplet,
+  IconFlame,
   IconMoon,
   IconPencil,
   IconRun,
@@ -11,6 +12,8 @@ import {
 
 export function HabitIcon({ name, ...props }) {
   switch (name) {
+    case "flame":
+      return <IconFlame {...props} />;
     case "droplet":
       return <IconDroplet {...props} />;
     case "book":

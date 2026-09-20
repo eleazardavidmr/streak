@@ -6,6 +6,7 @@ import {
   calculateCurrentStreak,
   getCheckins,
 } from "../lib/checkins.js";
+import { getDefaultHabit } from "../lib/habits.js";
 import { milestones } from "../lib/achievements.js";
 import LoadingView from "../components/ui/LoadingView.jsx";
 import {
@@ -22,7 +23,8 @@ export default function Achievements() {
   useEffect(() => {
     let mounted = true;
 
-    getCheckins()
+    getDefaultHabit()
+      .then((defaultHabit) => getCheckins(defaultHabit.id))
       .then((dates) => {
         if (!mounted) {
           return;

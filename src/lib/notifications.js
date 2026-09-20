@@ -6,6 +6,7 @@ import {
   getTodayDate,
   hasCheckedInToday,
 } from "./checkins.js";
+import { getDefaultHabit } from "./habits.js";
 import { milestones } from "./achievements.js";
 
 const REMINDER_HOUR = 18;
@@ -93,7 +94,8 @@ export async function syncNotifications() {
     throw userError;
   }
 
-  const checkinDates = await getCheckins();
+  const defaultHabit = await getDefaultHabit();
+  const checkinDates = await getCheckins(defaultHabit.id);
   const candidates = buildCandidates(checkinDates);
 
   if (candidates.length > 0) {

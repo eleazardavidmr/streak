@@ -11,6 +11,7 @@ import { undoTodayCheckin } from "../lib/checkins.js";
 import { springSoft } from "../lib/motion.js";
 
 export default function ResetFlow({
+  habitId,
   streak,
   checkinDates,
   hasCheckedInToday,
@@ -39,7 +40,7 @@ export default function ResetFlow({
 
     try {
       if (hasCheckedInToday) {
-        await undoTodayCheckin();
+        await undoTodayCheckin(habitId);
       }
 
       await reportRelapse({

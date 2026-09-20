@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
+import OnboardingPage from "./pages/OnboardingPage.jsx";
 import Achievements from "./pages/Achievements.jsx";
 import Settings from "./pages/Settings.jsx";
 import ResetPage from "./pages/ResetPage.jsx";
@@ -164,10 +166,24 @@ function App() {
   }
 
   if (!session) {
-    return (
+    const isAuthRoute = location === "/login" || location === "/register";
+
+    return isAuthRoute ? (
       <AuthPage
         mode={location === "/register" ? "register" : "login"}
         onNavigate={navigate}
+      />
+    ) : (
+      <LandingPage onNavigate={navigate} />
+    );
+  }
+
+  if (!profileError && !profile.onboardingCompletedAt) {
+    return (
+      <OnboardingPage
+        user={session.user}
+        profile={profile}
+        onProfileChange={setProfile}
       />
     );
   }

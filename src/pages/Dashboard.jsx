@@ -5,7 +5,6 @@ import CheckinButton from "../components/CheckInButton.jsx";
 import UrgentSupport from "../components/UrgenSupport.jsx";
 import ResetFlow from "../components/ResetFlow.jsx";
 import ActivityHeatmap from "../components/ActivityHeatMap.jsx";
-import RunningStreak from "../components/RunningStreak.jsx";
 import HabitsSection from "../components/HabitsSection.jsx";
 import FocusPrinciples from "../components/FocusPrinciples.jsx";
 import LoadingView from "../components/ui/LoadingView.jsx";
@@ -20,10 +19,12 @@ import {
   markTodayClean,
   undoTodayCheckin,
 } from "../lib/checkins.js";
+import { getDefaultHabit } from "../lib/habits.js";
 import { getRelapses } from "../lib/relapses.js";
 import { fadeRise, springSoft } from "../lib/motion.js";
 
 export default function Dashboard({ profile, onNavigate, onActivityChange }) {
+  const [habitId, setHabitId] = useState(null);
   const [checkinDates, setCheckinDates] = useState([]);
   const [relapseDates, setRelapseDates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,16 +35,21 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([getCheckins(), getRelapses()])
-      .then(([dates, relapses]) => {
-        if (mounted) {
-          setCheckinDates(dates);
-          setRelapseDates(relapses);
-        }
-      })
+    getDefaultHabit()
+      .then((defaultHabit) =>
+        Promise.all([getCheckins(defaultHabit.id), getRelapses()]).then(
+          ([dates, relapses]) => {
+            if (mounted) {
+              setHabitId(defaultHabit.id);
+              setCheckinDates(dates);
+              setRelapseDates(relapses);
+            }
+          },
+        ),
+      )
       .catch(() => {
         if (mounted) {
-          setError("Unable to load your check-ins.");
+          setError("Unable to load your streak.");
         }
       })
       .finally(() => {
@@ -63,12 +69,12 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
 
     try {
       if (hasCheckedInToday(checkinDates)) {
-        await undoTodayCheckin();
+        await undoTodayCheckin(habitId);
         setCheckinDates((dates) =>
           dates.filter((date) => date !== getTodayDate()),
         );
       } else {
-        await markTodayClean();
+        await markTodayClean(habitId);
         setCheckinDates((dates) => [...dates, getTodayDate()]);
         setCheckinCelebration((value) => value + 1);
       }
@@ -94,6 +100,18 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
     onActivityChange?.();
   };
 
+  if (loading) {
+    return <LoadingView label="Loading your streak" />;
+  }
+
+  if (!habitId) {
+    return (
+      <main className="flex-1 flex items-center justify-center px-margin pt-nav pb-nav bg-surface">
+        <p className="text-body-md text-error">{error}</p>
+      </main>
+    );
+  }
+
   const checkedIn = hasCheckedInToday(checkinDates);
   const streak = calculateCurrentStreak(checkinDates);
   const bestStreak = calculateBestStreak(checkinDates);
@@ -104,10 +122,6 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
     relapseDates,
   );
   const heatmapMonths = buildHeatmapMonths(16, profile.weekStartsOn);
-
-  if (loading) {
-    return <LoadingView label="Loading your streak" />;
-  }
 
   return (
     <div className="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container">
@@ -141,6 +155,7 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
           />
           <UrgentSupport onNavigate={onNavigate} />
           <ResetFlow
+            habitId={habitId}
             streak={streak}
             checkinDates={checkinDates}
             hasCheckedInToday={checkedIn}
@@ -177,17 +192,6 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
           animate="visible"
           transition={{ ...springSoft, delay: 0.18 }}
         >
-          <RunningStreak profile={profile} />
-        </motion.div>
-
-        <div className="w-full h-px bg-surface-container-highest my-space-xl opacity-60" />
-
-        <motion.div
-          variants={fadeRise}
-          initial="hidden"
-          animate="visible"
-          transition={{ ...springSoft, delay: 0.24 }}
-        >
           <HabitsSection />
         </motion.div>
 
@@ -197,7 +201,7 @@ export default function Dashboard({ profile, onNavigate, onActivityChange }) {
           variants={fadeRise}
           initial="hidden"
           animate="visible"
-          transition={{ ...springSoft, delay: 0.3 }}
+          transition={{ ...springSoft, delay: 0.24 }}
         >
           <FocusPrinciples />
         </motion.div>
